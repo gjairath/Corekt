@@ -91,9 +91,6 @@ class ParsedObject:
         
         time.sleep(2)
         
-        print(data_days.text)
-        print(data_time_slots.text)
-        
         return data_days, data_time_slots
         
     # Mostly for debugging purposes.

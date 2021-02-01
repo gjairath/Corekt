@@ -18,20 +18,28 @@ class ProcessData():
         self.parsed.run()
         
         #raw array needs to be processed
-        self.days = self.parsed.data_days_o.text.split("2021\n")[1].split("\n")
-        
-        
-        self.time_slots = self.parsed.data_time_slots_o.text.split("BOOK NOW\n")
-        
+        self.days = []
+        self.time_slots = []        
+            
     
-    def processing_data(self):
+    
+    def show_days(self):
+
+        self.days = self.parsed.data_days_o.text.split("2021\n")[1].split("\n")
         
         for item in self.days:
             if (item.isnumeric()):
                 self.days.remove(item)
                 
-        print ("\n\n----------\n")
-        print ("days: {}".format(self.days))
+        print ("\n\n---DAYS-----\n")
+        
+        for item in self.days:
+            print (item, end = ", ")
+    
+    def processing_data(self):
+        
+        self.time_slots = self.parsed.data_time_slots_o.text.split("BOOK NOW\n")
+
         print ("\n\n----------\n\n")
         
 
@@ -50,11 +58,5 @@ class ProcessData():
     def reset(self):
         self.days = self.parsed.data_days_o.text.split("2021\n")[1].split("\n")
         self.time_slots = self.parsed.data_time_slots_o.text.split("BOOK NOW\n")
-
-
-pd = ProcessData()
-pd.processing_data()
-    
-    
     
     

@@ -18,4 +18,8 @@ Created on Sat Jan 30 22:03:31 2021
 6. change push to code input
 
 7. wait till the fucing presence.
+
+
+8. Input day -> Get data out -> Display -> Allow for booking
+9. Cancel later.
 '''
