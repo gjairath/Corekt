@@ -14,13 +14,23 @@ if __name__ == "__main__":
     
     data = pd.ProcessData()
     data.show_days()
+    
+    is_true = True
+    
+    while (is_true):
+        choice = input("\n\nEnter numerically 1 -> n (For speed purposes)\n 69 to quit:")    
+    
+    
+        if (choice == 69): is_true = False
+   
+        day_to_click  = data.parsed.driver.find_element_by_xpath(
+                      "/html/body/div[5]/div[1]/div[2]/div[9]/div[2]/div[2]/button[%d]" % int(choice))
         
-    choice = input("\n\nEnter numerically 1 -> n (For speed purposes):")
-
-
-    day_to_click  = data.parsed.driver.find_element_by_xpath(
-                  "/html/body/div[5]/div[1]/div[2]/div[9]/div[2]/div[2]/button[choice")
+        day_to_click.click()
     
-    day_to_click.click()
-
-    
+        
+        if (choice != 1): data.refetch_data_time()
+        
+        #displays the time slots.
+        data.processing_data() 
+        

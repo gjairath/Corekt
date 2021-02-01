@@ -18,14 +18,19 @@ class ProcessData():
         self.parsed.run()
         
         #raw array needs to be processed
-        self.days = []
-        self.time_slots = []        
-            
+        #shows first day by default
+        self.days = self.parsed.data_days_o.text.split("2021\n")[1].split("\n")
+        self.time_slots = self.parsed.data_time_slots_o.text.split("BOOK NOW\n")
+
     
+    
+    def refetch_data_time(self):
+        _, time_slots = self.parsed.retrieve_data()
+        self.time_slots = time_slots.text.split("BOOK NOW\n")
+
     
     def show_days(self):
 
-        self.days = self.parsed.data_days_o.text.split("2021\n")[1].split("\n")
         
         for item in self.days:
             if (item.isnumeric()):
@@ -38,7 +43,6 @@ class ProcessData():
     
     def processing_data(self):
         
-        self.time_slots = self.parsed.data_time_slots_o.text.split("BOOK NOW\n")
 
         print ("\n\n----------\n\n")
         
