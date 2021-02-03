@@ -58,6 +58,8 @@ class ProcessData():
 
         print ("slots: {}".format(self.time_slots))
         
+        return self.time_slots
+        
     
     def reset(self):
         self.days = self.parsed.data_days_o.text.split("2021\n")[1].split("\n")

@@ -9,6 +9,7 @@ Filename: Main.py
 
 
 import process_data as pd
+import gui_utility as gu
 
 if __name__ == "__main__":
     
@@ -32,5 +33,8 @@ if __name__ == "__main__":
         if (choice != 1): data.refetch_data_time()
         
         #displays the time slots.
-        data.processing_data() 
+        times = data.processing_data() 
+        
+        gu.prettify(times)
+        
         
