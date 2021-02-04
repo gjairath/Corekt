@@ -36,6 +36,8 @@ def get_hour_vals(hour):
         
     return hs
 
+
+    
 def append_colon_zero(time_array):
 
     # Fix 11 or 12, it currently works for 6 - 7 type formats.
@@ -55,6 +57,15 @@ def append_colon_zero(time_array):
                     hour_array[idx_l] = sub_str[:] + ":00"
                     
             time_array[idx][0] = " ".join(hour_array)
+        
+        new_arr = []
+        if (item[0].split()[1] == "-" and item[0].split()[1] != item[0].split()[3]):
+            new_arr.append(item[0].split()[0])  
+            new_arr.append(item[0].split()[3]) 
+            new_arr.extend(item[0].split()[1:])
+        
+        if(new_arr != []): time_array[idx][0] = " ".join(new_arr)
+
     
     return time_array
     
@@ -69,14 +80,12 @@ def print_deltas(idx, time_array):
     print(ta[idx + 1][0] + "\t\t" + ta[idx + 1][1])
     print(ta[idx + 2][0] + "\t\t" + ta[idx + 2][1])
 
+    show_all = input("===============\n\nWould you like to see all options instead? :[Yes|No] \t")
+    if (show_all == "Yes"): 
+        for idx in range(len(ta)):
+            print(ta[idx][0] + "\t\t\t" + ta[idx][1])
 
-
-def show_all_times(time_array):
-    ta = append_colon_zero(time_array)
-
-    for idx in range(len(ta)):
-        print(ta[idx][0] + "\t\t{>8}".format( ta[idx][1] ))
-
+    return ta
 
 def prettify(time_array):    
     
@@ -100,14 +109,8 @@ def prettify(time_array):
                 idx = loop_idx
     
     # show the deltas.
-    print_deltas(idx, time_array)
+    time_array = print_deltas(idx, time_array)
     
+    print(time_array)
 
-    show_all = input("===============\n\nWould you like to see all options instead? :[Yes|No] \t")
-    if (show_all == "Yes"): show_all_times(time_array)
-    
-        
-    
-    
-        
 prettify(test_array)
