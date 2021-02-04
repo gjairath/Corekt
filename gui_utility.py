@@ -16,30 +16,15 @@ def number_of_AMs(time_array):
 
     return counter
 
-def get_slots(time_array, mode):
+def display_slots(time_array, mode):
     
     hs = []
     
-    if (mode == 1): sub_str = "AM"
-    else: sub_str = "PM" 
-        
     for item in time_array:
-        time_str = item[0]
-        
-        if (time_str.find(sub_str) != -1):    
-            # This is very self explanatory, fuck explanations. Good luck to the nerd
-            # who inherited this from me.
-            
-            if (time_str[1] == ":"): first_letter = time_str[0:1]
-            else: first_letter = time_str[0:2]
-                        
-            hs.append(first_letter)
-        
-        else:
-            continue
+        if (item[0].find(mode) != -1):
+            hs.append(item)
     
-    return hs
-
+    print(hs)
 
 def get_hour_vals(hour):
     hs = str()
@@ -50,44 +35,79 @@ def get_hour_vals(hour):
         hs = hour[0:2]
         
     return hs
+
+def append_colon_zero(time_array):
+
+    # Fix 11 or 12, it currently works for 6 - 7 type formats.
+    # Then check again for now.
     
+    # str.split() -> numeric value -> check if it has colon. 
+    # fix whatever is the issue and combine it.
+    # Permutations are stupid af.
     
+    # '5 - 6 PM', '89 spots available'
+    
+    for idx, item in enumerate(time_array):
+        hour_array = item[0].split()
+        for idx_l, sub_str in enumerate(hour_array):
+            if (sub_str.isnumeric()):
+                if (sub_str.find(":") == -1):
+                    hour_array[idx_l] = sub_str[:] + ":00"
+                    
+            time_array[idx][0] = " ".join(hour_array)
+    
+    return time_array
+    
+def print_deltas(idx, time_array):
+    ta = append_colon_zero(time_array)
+    
+    print ("\n\n")
+    
+    print(ta[idx - 2][0] + "\t\t" + ta[idx - 2][1])
+    print(ta[idx - 1][0] + "\t\t" +  ta[idx - 1][1])
+    print(ta[idx][0] + "\t\t" + ta[idx][1])
+    print(ta[idx + 1][0] + "\t\t" + ta[idx + 1][1])
+    print(ta[idx + 2][0] + "\t\t" + ta[idx + 2][1])
+
+
+
+def show_all_times(time_array):
+    ta = append_colon_zero(time_array)
+
+    for idx in range(len(ta)):
+        print(ta[idx][0] + "\t\t{>8}".format( ta[idx][1] ))
+
 
 def prettify(time_array):    
     
-    print(time_array)
     
     print ("\t SHOWING SLOTS\n\n")    
         
-    hour = input("FOR SPEED: simply enter a time of day, \nany general vicinity is fine. \nFor example 2:00 or 11:00 Do NOT other formats.\n\nEnter the value here:\t")
-    mode_day = input("\n\nEnter mode of day.\n1 for AM \n2 for PM for speed\n\nEnter the value here:\t")
+    hour = input("FOR SPEED: For example 2:00 or 11:00.\nEnter: \t")
+    mode_day = input("===============\n\nAM OR PM\nEnter:\t")
+    user_pref = get_hour_vals(hour)
     
-    hour_slots = get_slots(test_array, mode_day)
-    user_preference = get_hour_vals(hour)
+    # if the user says 11:45 take 11, traverse the time array and simply print a delta.
+    idx = 0
     
-    print (hour_slots)
-    print (user_preference)
+    for loop_idx, item in enumerate(time_array):
+        if (int(user_pref) >= 10):            
+            if (item[0][0] == user_pref[0] and item[0][1] == user_pref[1] and item[0].find(mode_day) != -1):
+                # This hour slot matches. 
+                idx = loop_idx
+        else:
+            if (item[0][0] == user_pref[0] and item[0].find(mode_day) != -1):
+                idx = loop_idx
     
+    # show the deltas.
+    print_deltas(idx, time_array)
     
-    
-    # if the user says 11:45 take 11, traverse the time arrayand simply print a delta.
-    # YOu can print all the hour slots for lols too. 
 
-    desired_idx = 0 # by default just show this.
-
-    for idx, hours in enumerate(hour_slots):
-        if (hours == user_preference):
-            desired_idx = idx
+    show_all = input("===============\n\nWould you like to see all options instead? :[Yes|No] \t")
+    if (show_all == "Yes"): show_all_times(time_array)
     
-    offset_idx = 0
-    if (mode_day == 2):
-        # Idiot entered PM
-        offset_idx = number_of_AMs(time_array)
         
-    print (time_array[offset_idx + desired_idx - 2])
-    print (time_array[offset_idx + desired_idx - 1])
-    print (time_array[offset_idx + desired_idx])
-    print (time_array[offset_idx + desired_idx + 1])
-    print (time_array[offset_idx + desired_idx + 2])
     
+    
+        
 prettify(test_array)
