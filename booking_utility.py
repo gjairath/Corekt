@@ -27,33 +27,6 @@ def cancel(data):
     
     data.parsed.driver.get("https://recwell.purdue.edu/MemberDetails#CourtBook")
     
-    
-
-    all_bookings = data.parsed.driver.find_element_by_id("divMyBookings-large").text
-    all_bookings = all_bookings.split("\n")
-    
-    # There are 5 items under each card.
-    
-    card_list = []
-    
-    for i in range(0, len(all_bookings), 5):
-        card_list.append(all_bookings[i : i+5])    
-    
-
-    for i in range(0, len(card_list)):
-        del card_list[i][0:2]
-        
-    print("----------")
-    for i in range(0, len(card_list)):
-        print ("\t[" + str(i + 1) + "]")
-        for j in range(0, len(card_list[i])):
-            print(card_list[i][j])
-        print("----------")
-        
-    user_choice = input("\nEnter your choice: ")
-    
-    user_btn = data.parsed.driver.find_element_by_xpath(
-        "/html/body/div[5]/div[1]/div[2]/div[2]/div[1]/div[1]/div[%d]/div/div[1]/div[2]/button/span[2]" % int(user_choice))
 
     #G is a shit name but its basically the entire table content.
     g = data.parsed.driver.find_element_by_xpath("/html/body/div[5]/div[1]/div[2]/div[5]/div/div/div[7]/form/div/div[2]/div[2]/table")    
@@ -85,6 +58,15 @@ def cancel(data):
         if (is_enabled == "True"):
             list_enabled.append(row)
         else:
-            list_disabld.append(row)
+            list_disabled.append(row)
+    
+    
+    see_all = input("\n Would you like to see only active bookings? [Yes|No]: ")
+
+    for i in range(len(list_enabled)):
+                   
+        print("----------")
+        print ("\t[" + str(i + 1) + "]")
+        print(list_enabled[i].text)
         
     return
