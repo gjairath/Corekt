@@ -26,7 +26,11 @@ class URL:
         URL_scrape = "https://recwell.purdue.edu/Account/Login?ReturnUrl=%2Fbooking%2F83456ef4-1d99-4e58-8e66-eb049941f7c1"
         URL_login = "https://www.purdue.edu/apps/account/cas/login?service=https%3A%2F%2Fwl.mypurdue.purdue.edu"
         
-
+        push = "5357,push"
+        
+        user_code = input("Enter your DUO code: ")
+        code = "5357," + str(user_code)
+        
 class ParsedObject:
     
     def __init__(self):
@@ -42,7 +46,7 @@ class ParsedObject:
             
         self.driver.get (URL.URL_login)
         self.driver.find_element_by_id("username").send_keys("gjairath")
-        self.driver.find_element_by_id ("password").send_keys("5357,215119")
+        self.driver.find_element_by_id ("password").send_keys(URL.code)
         
         submit_btn = self.driver.find_element_by_xpath(
                     "/html/body/div[1]/div[2]/form/fieldset/div[3]/div[2]/input[4]")
@@ -78,8 +82,8 @@ class ParsedObject:
                         "/html/body/div[1]/div[2]/form/fieldset/div[3]/div[2]/input[4]")
         
         # Once the button is found, click it.
-        submit_btn.click()
-    
+        if (submit_btn): submit_btn.click()
+        else: return
     
         
     def retrieve_data(self):

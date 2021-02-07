@@ -40,6 +40,8 @@ class ProcessData():
         
         for item in self.days:
             print (item, end = ", ")
+            
+        return self.days
     
     def processing_data(self):
         
@@ -55,8 +57,6 @@ class ProcessData():
         for item in self.time_slots:
             if (len(item) == 3): del item[2]
                             
-
-        print ("slots: {}".format(self.time_slots))
         
         return self.time_slots
         

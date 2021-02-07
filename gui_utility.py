@@ -5,8 +5,7 @@ Created on Wed Feb  3 00:36:34 2021
 @author: garvi
 """
 
-test_array = [['6 - 7 AM', '89 spots available'], ['6:20 - 7:40 AM', '89 spots available'], ['6:40 - 8 AM', '89 spots available'], ['7 - 8 AM', '90 spots available'], ['7:20 - 8:40 AM', '89 spots available'], ['7:40 - 9 AM', '90 spots available'], ['8 - 9 AM', '88 spots available'], ['8:20 - 9:40 AM', '84 spots available'], ['8:40 - 10 AM', '89 spots available'], ['9 - 10 AM', '90 spots available'], ['9:20 - 10:40 AM', '90 spots available'], ['9:40 - 11 AM', '88 spots available'], ['10 - 11 AM', '90 spots available'], ['10:20 - 11:40 AM', '90 spots available'], ['10:40 AM - 12 PM', '89 spots available'], ['11 AM - 12 PM', '90 spots available'], ['11:20 AM - 12:40 PM', '90 spots available'], ['11:40 AM - 1 PM', '88 spots available'], ['12 - 1 PM', '89 spots available'], ['12:20 - 1:40 PM', '90 spots available'], ['12:40 - 2 PM', '87 spots available'], ['1 - 2 PM', '88 spots available'], ['1:20 - 2:40 PM', '90 spots available'], ['1:40 - 3 PM', '87 spots available'], ['2 - 3 PM', '90 spots available'], ['2:20 - 3:40 PM', '89 spots available'], ['2:40 - 4 PM', '90 spots available'], ['3 - 4 PM', '90 spots available'], ['3:20 - 4:40 PM', '90 spots available'], ['3:40 - 5 PM', '88 spots available'], ['4 - 5 PM', '89 spots available'], ['4:20 - 5:40 PM', '90 spots available'], ['4:40 - 6 PM', '89 spots available'], ['5 - 6 PM', '89 spots available'], ['5:20 - 6:40 PM', '90 spots available'], ['5:40 - 7 PM', '88 spots available'], ['6 - 7 PM', '89 spots available'], ['6:20 - 7:40 PM', '90 spots available'], ['6:40 - 8 PM', '89 spots available'], ['7 - 8 PM', '90 spots available'], ['7:20 - 8:40 PM', '90 spots available'], ['7:40 - 9 PM', '89 spots available'], ['8 - 9 PM', '90 spots available'], ['8:20 - 9:40 PM', '90 spots available'], ['8:40 - 10 PM', '90 spots available'], ['9 - 10 PM', '90 spots available']]
-
+ta = [['6:00 AM - 7:00 AM', '46 spots available'], ['6:20 AM - 7:40 AM', '46 spots available'], ['6:40 AM - 8:00 AM', '63 spots available'], ['7:00 AM - 8:00 AM', '64 spots available'], ['7:20 AM - 8:40 AM', '68 spots available'], ['7:40 AM - 9:00 AM', '69 spots available'], ['8:00 AM - 9:00 AM', '79 spots available'], ['8:20 AM - 9:40 AM', '67 spots available'], ['8:40 AM - 10:00 AM', '73 spots available'], ['9:00 AM - 10:00 AM', '73 spots available'], ['9:20 AM - 10:40 AM', '77 spots available'], ['9:40 AM - 11:00 AM', '76 spots available'], ['10:00 AM - 11:00 AM', '84 spots available'], ['10:20 AM - 11:40 AM', '83 spots available'], ['10:40 AM - 12:00 PM', '83 spots available'], ['11:00 AM - 12:00 PM', '83 spots available'], ['11:20 AM - 12:40 PM', '87 spots available'], ['11:40 AM - 1:00 PM', '77 spots available'], ['12:00 PM - 1:00 PM', '84 spots available'], ['12:20 PM - 1:40 PM', '89 spots available'], ['12:40 PM - 2:00 PM', '85 spots available'], ['1:00 PM - 2:00 PM', '85 spots available'], ['1:20 PM - 2:40 PM', '84 spots available'], ['1:40 PM - 3:00 PM', '83 spots available'], ['2:00 PM - 3:00 PM', '89 spots available'], ['2:20 PM - 3:40 PM', '87 spots available'], ['2:40 PM - 4:00 PM', '81 spots available'], ['3:00 PM - 4:00 PM', '80 spots available'], ['3:20 PM - 4:40 PM', '73 spots available'], ['3:40 PM - 5:00 PM', '76 spots available'], ['4:00 PM - 5:00 PM', '79 spots available'], ['4:20 PM - 5:40 PM', '80 spots available'], ['4:40 PM - 6:00 PM', '77 spots available'], ['5:00 PM - 6:00 PM', '84 spots available'], ['5:20 PM - 6:40 PM', '75 spots available'], ['5:40 PM - 7:00 PM', '82 spots available'], ['6:00 PM - 7:00 PM', '84 spots available'], ['6:20 PM - 7:40 PM', '79 spots available'], ['6:40 PM - 8:00 PM', '83 spots available'], ['7:00 PM - 8:00 PM', '85 spots available'], ['7:20 PM - 8:40 PM', '83 spots available'], ['7:40 PM - 9:00 PM', '84 spots available'], ['8:00 PM - 9:00 PM', '77 spots available'], ['8:20 PM - 9:40 PM', '82 spots available'], ['8:40 PM - 10:00 PM', '81 spots available'], ['9:00 PM - 10:00 PM', '88 spots available']]
 
 def number_of_AMs(time_array):
     counter = 0
@@ -73,24 +72,21 @@ def print_deltas(idx, time_array):
     ta = append_colon_zero(time_array)
     
     print ("\n\n")
+    if(ta[idx - 2]): print("[" + str(idx - 2 + 1) + "] " + ta[idx - 2][0] + "\t\t" + ta[idx - 2][1])
+    if(ta[idx - 1]): print("[" + str(idx - 1 + 1) + "] " + ta[idx - 1][0] + "\t\t" +  ta[idx - 1][1])
+    if(ta[idx]): print("[" + str(idx + 1) + "] " + ta[idx][0] + "\t\t" + ta[idx][1])
     
-    print(ta[idx - 2][0] + "\t\t" + ta[idx - 2][1])
-    print(ta[idx - 1][0] + "\t\t" +  ta[idx - 1][1])
-    print(ta[idx][0] + "\t\t" + ta[idx][1])
-    print(ta[idx + 1][0] + "\t\t" + ta[idx + 1][1])
-    print(ta[idx + 2][0] + "\t\t" + ta[idx + 2][1])
+    if (idx < len(time_array) - 2):
+        print("[" + str(idx + 1 + 1) + "] " + ta[idx + 1][0] + "\t\t" + ta[idx + 1][1])
+        print("[" + str(idx + 2 + 1) + "] " + ta[idx + 2][0] + "\t\t" + ta[idx + 2][1])
 
-    show_all = input("===============\n\nWould you like to see all options instead? :[Yes|No] \t")
-    if (show_all == "Yes"): 
-        for idx in range(len(ta)):
-            print(ta[idx][0] + "\t\t\t" + ta[idx][1])
 
     return ta
 
-def prettify(time_array):    
+def prettify(time_array, day, choice):    
     
     
-    print ("\t SHOWING SLOTS\n\n")    
+    print ("\t SHOWING SLOTS for: {}\n\n".format(day[int(choice) - 1]))    
         
     hour = input("FOR SPEED: For example 2:00 or 11:00.\nEnter: \t")
     mode_day = input("===============\n\nAM OR PM\nEnter:\t")
@@ -110,7 +106,3 @@ def prettify(time_array):
     
     # show the deltas.
     time_array = print_deltas(idx, time_array)
-    
-    print(time_array)
-
-prettify(test_array)
