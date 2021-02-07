@@ -11,6 +11,8 @@ Filename: Main.py
 import process_data as pd
 import gui_utility as gui
 
+import booking_utility as bu
+
 if __name__ == "__main__":
     
     data = pd.ProcessData()
@@ -40,23 +42,18 @@ if __name__ == "__main__":
         
         gui.prettify(times, days, choice)
         
-        show_all = input("===============\n\nWould you like to see all options instead? :[Yes|No|Book] \t")
+        show_all = input("===============\n\n See all options? [Yes|No|Book|Cancel]: ")
         if (show_all == "Yes"): 
             for idx in range(len(times)):
                 print("[" + str(idx + 1) + "] " + times[idx][0] + "\t\t\t" + times[idx][1])
                 
                 
         if (show_all == "Book" or show_all == "book" or show_all == "b" or show_all == "B"):
-            user_booking = input("\nEnter the choice as indicated by the []'s: ")
-                        
-            user_confirmation = input("\nAre you sure you want to book [{}] [Yes|No]:".format(user_booking))
+            bu.book(data)
             
-            if (user_confirmation == "No"): break
-        
-            booking  = data.parsed.driver.find_element_by_xpath(
-                "/html/body/div[5]/div[1]/div[2]/div[11]/div/div[%d]/div/button" % int(user_booking))
-            
-            booking.click()
+        if (show_all == "Cancel" or show_all == "c" or show_all == "C" or show_all == "cancel"):
+            bu.cancel(data)
+
             
             
 

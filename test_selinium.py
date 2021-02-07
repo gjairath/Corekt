@@ -75,9 +75,12 @@ class ParsedObject:
                 "/html/body/div[5]/div[4]/div/div/div/div[2]/div[2]/div[2]/div/button")        
         redirect_btn.click()
         
-        self.driver.find_element_by_id("username").send_keys("gjairath")
-        self.driver.find_element_by_id ("password").send_keys("5357,push")
-            
+        user_name = self.driver.find_element_by_id("username")
+        if (user_name): user_name.send_keys("gjairath")
+        
+        password = self.driver.find_element_by_id ("password")
+        if (password): password.send_keys("5357,push")
+        
         submit_btn = self.driver.find_element_by_xpath(
                         "/html/body/div[1]/div[2]/form/fieldset/div[3]/div[2]/input[4]")
         
