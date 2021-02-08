@@ -28,7 +28,7 @@ class URL:
         
         push = "5357,push"
         
-        user_code = input("Enter your DUO code: ")
+        user_code = input("Enter your DUO code or just enter push: ")
         code = "5357," + str(user_code)
         
 class ParsedObject:
@@ -75,7 +75,10 @@ class ParsedObject:
                 "/html/body/div[5]/div[4]/div/div/div/div[2]/div[2]/div[2]/div/button")        
         redirect_btn.click()
         
-        user_name = self.driver.find_element_by_id("username")
+        try:
+            user_name = self.driver.find_element_by_id("username")
+        except:
+            return # something weird happened purdue
         if (user_name): user_name.send_keys("gjairath")
         
         password = self.driver.find_element_by_id ("password")

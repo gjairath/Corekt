@@ -5,7 +5,9 @@ Created on Sun Feb  7 01:58:31 2021
 @author: garvi
 """
 from selenium.webdriver.common.by import By
-
+import time
+import sys
+import re
 
 #Booking.utility.
 
@@ -28,6 +30,8 @@ def cancel(data):
     data.parsed.driver.get("https://recwell.purdue.edu/MemberDetails#CourtBook")
     
 
+    time.sleep(2)
+
     #G is a shit name but its basically the entire table content.
     g = data.parsed.driver.find_element_by_xpath("/html/body/div[5]/div[1]/div[2]/div[5]/div/div/div[7]/form/div/div[2]/div[2]/table")    
     
@@ -39,6 +43,9 @@ def cancel(data):
     
     list_enabled = []
     list_disabled = []
+    
+    enabled_click = []
+    
     for i in range(size_of_list):
         # These are the rows of all th bookings, some are expired. 
         
@@ -53,20 +60,63 @@ def cancel(data):
         
         
         # The thid value is CANCEL. Go one laye down to the button and exampline this value.
-        is_enabled = inner_cell_values_of_bookings[3].find_element_by_tag_name("button").get_attribute("data-booking-cancel")
+        btn_cancel = inner_cell_values_of_bookings[3].find_element_by_tag_name("button")
+        is_enabled = btn_cancel.get_attribute("data-booking-cancel")
         
         if (is_enabled == "True"):
             list_enabled.append(row)
+            enabled_click.append(btn_cancel)
         else:
             list_disabled.append(row)
     
     
     see_all = input("\n Would you like to see only active bookings? [Yes|No]: ")
 
-    for i in range(len(list_enabled)):
-                   
-        print("----------")
-        print ("\t[" + str(i + 1) + "]")
-        print(list_enabled[i].text)
-        
+    if (see_all == "Yes" or see_all == "y" or see_all == "yes" or see_all == "Y"):
+        for i in range(len(list_enabled)):
+                       
+            print("----------")
+            print ("[" + str(i + 1) + "]", end = " ")
+            
+            string = list_enabled[i].text.split(",")[1].split("CANCEL")[0]
+            
+            match = re.match(r'.*([1-3][0-9]{3})', string)
+            year = match.group(1) + "    " #for some reason this is the only way
+            
+            # The things you do for idiot users
+            print (string.replace(match.group(1), year))
+            
+                  
+    else:
+        for i in range(len(list_disabled)):
+                       
+            print("----------")
+            print ("[" + str(i + 1) + "]", end = " ")
+            
+            string = list_disabled[i].text.split(",")[1].split("CANCEL")[0]
+            
+            match = re.match(r'.*([1-3][0-9]{3})', string)
+            year = match.group(1) + "        " #for some reason this is the only way
+            
+            # The things you do for idiot users
+            print (string.replace(match.group(1), year))
+            
+            return
+    
+    
+    if (list_enabled == []): 
+        print ("Bro, no bookings Wtf? go get gains!")
+        return()
+    
+    user_choice = input("Enter the choice you want to cancel: ")
+   
+    time.sleep(5)
+   # print(enabled_click)
+    enabled_click[int(user_choice) - 1].click()
+    
+    time.sleep(5)    
+    confirm_click = data.parsed.driver.find_element_by_xpath(
+        "/html/body/div[5]/div[1]/div[2]/div[5]/div/div/div[7]/form/div/div[1]/div/div/div[3]/button[2]")
+    confirm_click.click()
+    
     return

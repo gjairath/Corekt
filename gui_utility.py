@@ -72,8 +72,8 @@ def print_deltas(idx, time_array):
     ta = append_colon_zero(time_array)
     
     print ("\n\n")
-    if(ta[idx - 2]): print("[" + str(idx - 2 + 1) + "] " + ta[idx - 2][0] + "\t\t" + ta[idx - 2][1])
-    if(ta[idx - 1]): print("[" + str(idx - 1 + 1) + "] " + ta[idx - 1][0] + "\t\t" +  ta[idx - 1][1])
+    if(idx > 2 and ta[idx - 2]): print("[" + str(idx - 2 + 1) + "] " + ta[idx - 2][0] + "\t\t" + ta[idx - 2][1])
+    if(idx > 1 and ta[idx - 1]): print("[" + str(idx - 1 + 1) + "] " + ta[idx - 1][0] + "\t\t" +  ta[idx - 1][1])
     if(ta[idx]): print("[" + str(idx + 1) + "] " + ta[idx][0] + "\t\t" + ta[idx][1])
     
     if (idx < len(time_array) - 2):
@@ -88,7 +88,7 @@ def prettify(time_array, day, choice):
     
     print ("\t SHOWING SLOTS for: {}\n\n".format(day[int(choice) - 1]))    
         
-    hour = input("FOR SPEED: For example 2:00 or 11:00.\nEnter: \t")
+    hour = input("Enter a time, for example 2:00 or 11:00.\nEnter: \t")
     mode_day = input("===============\n\nAM OR PM\nEnter:\t")
     user_pref = get_hour_vals(hour)
     
