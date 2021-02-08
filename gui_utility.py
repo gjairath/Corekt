@@ -69,6 +69,7 @@ def append_colon_zero(time_array):
     return time_array
     
 def print_deltas(idx, time_array):
+    
     ta = append_colon_zero(time_array)
     
     print ("\n\n")
@@ -85,7 +86,7 @@ def print_deltas(idx, time_array):
 
 def prettify(time_array, day, choice):    
     
-    
+    print (time_array)
     print ("\t SHOWING SLOTS for: {}\n\n".format(day[int(choice) - 1]))    
         
     hour = input("Enter a time, for example 2:00 or 11:00.\nEnter: \t")

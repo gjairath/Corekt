@@ -12,6 +12,7 @@ import process_data as pd
 import gui_utility as gui
 from sys import *
 import booking_utility as bu
+import time
 
 if __name__ == "__main__":
     
@@ -36,6 +37,8 @@ if __name__ == "__main__":
                 is_true = False
                 print ("Exiting...")
                 exit()
+                
+            time.sleep(4)    
        
             day_to_click  = data.parsed.driver.find_element_by_xpath(
                           "/html/body/div[5]/div[1]/div[2]/div[9]/div[2]/div[2]/button[%d]" % int(choice))
@@ -46,7 +49,7 @@ if __name__ == "__main__":
             if (choice != 1): data.refetch_data_time()
             
             #displays the time slots.
-            times = data.processing_data() 
+            times, isBooked = data.processing_data() 
             
             gui.prettify(times, days, choice)
             
@@ -55,10 +58,18 @@ if __name__ == "__main__":
                 for idx in range(len(times)):
                     print("[" + str(idx + 1) + "] " + times[idx][0] + "\t\t\t" + times[idx][1])
                 
-                bu.book(data)
+                if (isBooked):
+                    print ("You've already booked on this day, cancel and try again.")
+                
+                else:
+                    bu.book(data)
                     
             if (show_all == "Book" or show_all == "book" or show_all == "b" or show_all == "B"):
-                bu.book(data)
+                
+                if (isBooked):
+                    print ("You've already booked on this day, cancel and try again.")
+                else:    
+                    bu.book(data)
         
         elif (user_decision == "2"):
             bu.cancel(data)

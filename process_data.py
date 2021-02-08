@@ -47,18 +47,30 @@ class ProcessData():
         
 
         print ("\n\n----------\n\n")
-        
-
+        isBooked = False
+        if (len(self.time_slots) == 1):
+            self.time_slots = self.time_slots[0].split("UNAVAILABLE")
+            isBooked = True
+            
         self.time_slots.pop(0)
+
 
         for idx, item in enumerate(self.time_slots):                
             self.time_slots[idx] = item.split("\n")
+        
+        if (isBooked == True):            
+            for item in (self.time_slots):
+                    del item[0]
+                    if(len(item) > 2): del item[2]
+
+                
+
             
         for item in self.time_slots:
             if (len(item) == 3): del item[2]
                             
         
-        return self.time_slots
+        return self.time_slots, isBooked
         
     
     def reset(self):
