@@ -4,14 +4,24 @@ Created on Sun Feb  7 01:58:31 2021
 
 @author: garvi
 """
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+
+
 import time
 import sys
 import re
 
 #Booking.utility.
 
-def book(data):
+'''
+ element = WebDriverWait(data.parsed.driver, 20).until(
+     EC.presence_of_element_located((By.ID, "divBookingSlots")))
+
+'''
+
+def book(data, isConcurrent):
     user_booking = input("\nEnter the choice as indicated by the []'s: ")
                 
     user_confirmation = input("\nAre you sure you want to book [{}] [Yes|No]:".format(user_booking))
@@ -20,9 +30,35 @@ def book(data):
 
     booking  = data.parsed.driver.find_element_by_xpath(
         "/html/body/div[5]/div[1]/div[2]/div[11]/div/div[%d]/div/button" % int(user_booking))
+  
+    if (isConcurrent == False):
+           booking.click()
+ 
     
-    booking.click()
-    
+    while (isConcurrent == True):
+
+            # If the element desired is found, then click the booking button and wait for the page to refresh.
+        
+        element = WebDriverWait(data.parsed.driver, 20).until(
+            EC.presence_of_element_located((By.ID, "divBookingSlots")))
+        
+        try:
+            
+            #So when the page reloads, the fucking button is lost in its tracks.
+            booking  = data.parsed.driver.find_element_by_xpath(
+                "/html/body/div[5]/div[1]/div[2]/div[11]/div/div[%d]/div/button" % int(user_booking))
+            booking.click()
+            
+        except:
+            #I dont know. Just sleep and hope it works out lol.
+            time.sleep(2)
+                
+        escape_clause = data.parsed.driver.find_element_by_xpath(
+            "/html/body/div[5]/div[1]/div[2]/div[11]/div[1]")
+        
+        if (escape_clause.text == "Some times may be unavailable due to conflicting appointments."):
+            isConcurrent = False
+            
 
 def cancel(data):
     print ("Showing reservations..")

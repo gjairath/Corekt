@@ -86,7 +86,6 @@ def print_deltas(idx, time_array):
 
 def prettify(time_array, day, choice):    
     
-    print (time_array)
     print ("\t SHOWING SLOTS for: {}\n\n".format(day[int(choice) - 1]))    
         
     hour = input("Enter a time, for example 2:00 or 11:00.\nEnter: \t")

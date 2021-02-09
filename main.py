@@ -22,9 +22,9 @@ if __name__ == "__main__":
     
     while (is_true):
         
-        user_decision = input("\n[[1] Book | [2] Cancel/View | [3] Quit]: ")
+        user_decision = input("\n[[1] Book | [2] Cancel/View | [3] Concurrent-Booking | [4] Quit |]: ")
         
-        if (user_decision == "1"):
+        if (user_decision == "1" or user_decision == "3"):
             
             data.parsed.driver.get("https://recwell.purdue.edu/booking/83456ef4-1d99-4e58-8e66-eb049941f7c1")
         
@@ -69,10 +69,13 @@ if __name__ == "__main__":
                 if (isBooked):
                     print ("You've already booked on this day, cancel and try again.")
                 else:    
-                    bu.book(data)
+                    isConcurrent = False
+                    if (user_decision == "3"): isConcurrent = True
+                    bu.book(data, isConcurrent)
         
         elif (user_decision == "2"):
             bu.cancel(data)
+            
             
         
         else:
