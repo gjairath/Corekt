@@ -34,8 +34,9 @@ if __name__ == "__main__":
             days = data.show_days()
             
             choice = input("\n\nWhat Day? Enter numerically. \n q to quit: ")    
-        
-        
+            
+            if (choice == ""): choice = "1"
+            
             if (choice == "q" or choice == "Q"): 
                 is_true = False
                 print ("Exiting...")
@@ -69,7 +70,7 @@ if __name__ == "__main__":
                     print ("You've already booked on this day, cancel and try again.")
                 
                 else:
-                    bu.book(data)
+                    bu.book(data, False)
                     
             if (show_all == "Book" or show_all == "book" or show_all == "b" or show_all == "B"):
                 

@@ -28,8 +28,10 @@ class URL:
         
         push = "5357,push"
         
-        user_code = input("Enter your DUO code or just enter push: ")
-        code = "5357," + str(user_code)
+        user_code = input("Enter your boiler 4 digit pin [Don't worry, it's safe, results are discarded]: ")
+        code = str(user_code) + ",push"
+        
+        print ("\nPlease approve the request on duo mobile..")
         
 class ParsedObject:
     

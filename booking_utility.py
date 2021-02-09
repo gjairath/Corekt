@@ -34,8 +34,8 @@ def book(data, isConcurrent):
     if (isConcurrent == False):
            booking.click()
  
-    
-    print ("Currently sending a shit ton of requests.")
+    if (isConcurrent == True):
+        print ("Currently sending a shit ton of requests.\nWhen a spot opens up you'll be the first in line.")
     
     counter = 0
     while (isConcurrent == True):
@@ -159,15 +159,25 @@ def cancel(data):
     
     user_choice = input("Enter the choice you want to cancel: ")
    
-    x = "/html/body/div[5]/div[1]/div[2]/div[5]/div/div/div[7]/form/div/div[1]/div/div/div[3]/button[2]"
-    confirm_click = WebDriverWait(data.parsed.driver, 20).until(
-        EC.element_to_be_clickable((By.XPATH, x)))
-
-#    time.sleep(5)
-   # print(enabled_click)
+    time.sleep(2) #for good measure.
     enabled_click[int(user_choice) - 1].click()
+
+
+    x = "/html/body/div[5]/div[1]/div[2]/div[5]/div/div/div[7]/form/div/div[1]/div/div/div[3]/button[2]"
+ 
+    try:
+        confirm_click = WebDriverWait(data.parsed.driver, 20).until(
+            EC.element_to_be_clickable((By.XPATH, x)))
+        
+    except:
+        print ("Something went wrong, try again")
+        return
+
+#    time.sleep(3)
+   # print(enabled_click)
     
-#    time.sleep(5)    
+ #   time.sleep(3)    
     confirm_click.click()
     
+    print ("\nSuccess, your booking is cancelled.")
     return
