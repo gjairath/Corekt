@@ -35,12 +35,20 @@ def book(data, isConcurrent):
            booking.click()
  
     
+    print ("Currently sending a shit ton of requests.")
+    
+    counter = 0
     while (isConcurrent == True):
 
             # If the element desired is found, then click the booking button and wait for the page to refresh.
         
-        element = WebDriverWait(data.parsed.driver, 20).until(
-            EC.presence_of_element_located((By.ID, "divBookingSlots")))
+        
+        if (counter == 15):
+            # Sleep 30 seconds once you hit every multiple of 15 in terms of requests lmao.
+            # CAnt be risked getting banned you know.
+            time.sleep(30)
+            counter = 0
+            print ("Going to sleep, to avoid detection")
         
         try:
             
@@ -48,15 +56,20 @@ def book(data, isConcurrent):
             booking  = data.parsed.driver.find_element_by_xpath(
                 "/html/body/div[5]/div[1]/div[2]/div[11]/div/div[%d]/div/button" % int(user_booking))
             booking.click()
+            counter += 1
             
         except:
             #I dont know. Just sleep and hope it works out lol.
             time.sleep(2)
-                
-        escape_clause = data.parsed.driver.find_element_by_xpath(
-            "/html/body/div[5]/div[1]/div[2]/div[11]/div[1]")
+            
+
+        element = WebDriverWait(data.parsed.driver, 20).until(
+            EC.presence_of_element_located((By.ID, "divBookingSlots")))
         
-        if (escape_clause.text == "Some times may be unavailable due to conflicting appointments."):
+        
+        e_text = element.text.split("\n")[0]
+        
+        if (e_text == "Some times may be unavailable due to conflicting appointments."):
             isConcurrent = False
             
 
@@ -146,13 +159,15 @@ def cancel(data):
     
     user_choice = input("Enter the choice you want to cancel: ")
    
-    time.sleep(5)
+    x = "/html/body/div[5]/div[1]/div[2]/div[5]/div/div/div[7]/form/div/div[1]/div/div/div[3]/button[2]"
+    confirm_click = WebDriverWait(data.parsed.driver, 20).until(
+        EC.element_to_be_clickable((By.XPATH, x)))
+
+#    time.sleep(5)
    # print(enabled_click)
     enabled_click[int(user_choice) - 1].click()
     
-    time.sleep(5)    
-    confirm_click = data.parsed.driver.find_element_by_xpath(
-        "/html/body/div[5]/div[1]/div[2]/div[5]/div/div/div[7]/form/div/div[1]/div/div/div[3]/button[2]")
+#    time.sleep(5)    
     confirm_click.click()
     
     return

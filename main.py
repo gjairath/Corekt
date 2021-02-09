@@ -6,6 +6,9 @@ Created on Mon Feb  1 03:31:29 2021
 
 Filename: Main.py
 """
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 
 
 import process_data as pd
@@ -38,10 +41,14 @@ if __name__ == "__main__":
                 print ("Exiting...")
                 exit()
                 
-            time.sleep(4)    
+            x = "/html/body/div[5]/div[1]/div[2]/div[9]/div[2]/div[2]/button[%d]" % int(choice)
+            day_to_click = WebDriverWait(data.parsed.driver, 20).until(
+                    EC.element_to_be_clickable((By.XPATH, x)))
+
+          #  time.sleep(4)    
        
-            day_to_click  = data.parsed.driver.find_element_by_xpath(
-                          "/html/body/div[5]/div[1]/div[2]/div[9]/div[2]/div[2]/button[%d]" % int(choice))
+#            day_to_click  = data.parsed.driver.find_element_by_xpath(
+ #                         "/html/body/div[5]/div[1]/div[2]/div[9]/div[2]/div[2]/button[%d]" % int(choice))
             
             day_to_click.click()
         
