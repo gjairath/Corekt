@@ -40,7 +40,8 @@ def book(data, isConcurrent, times):
            booking.click()
  
     if (isConcurrent == True):
-        print ("Currently sending a shit ton of requests.\nWhen a spot opens up you'll be the first in line.")
+        print ("\nWhen a spot opens up you'll be the first in line.\n\n")
+        print ("Loading", end = "")
     
     counter = 0
     while (isConcurrent == True):
@@ -51,9 +52,10 @@ def book(data, isConcurrent, times):
         if (counter == 15):
             # Sleep 30 seconds once you hit every multiple of 15 in terms of requests lmao.
             # CAnt be risked getting banned you know.
+            
             time.sleep(30)
             counter = 0
-            print ("Going to sleep, to avoid detection")
+            print (".")
         
         try:
             

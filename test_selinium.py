@@ -17,6 +17,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 import time
+import getpass 
 
 class URL:
         
@@ -27,7 +28,7 @@ class URL:
         URL_login = "https://www.purdue.edu/apps/account/cas/login?service=https%3A%2F%2Fwl.mypurdue.purdue.edu"
         
         user_name = input("Enter your boiler username [Dont worry results are discarded after use]: ")
-        user_code = input("Enter your boiler 4 digit pin [Dont worry results are discarded after use]: ")
+        user_code = getpass.getpass(prompt="Enter your boiler 4 digit pin [Using Getpass Module...]: ")
         code = str(user_code) + ",push"
         
         print ("\nPlease approve the request on duo mobile..")
