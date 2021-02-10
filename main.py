@@ -33,7 +33,7 @@ if __name__ == "__main__":
         
             days = data.show_days()
             
-            choice = input("\n\nWhat Day? Enter numerically. \n q to quit: ")    
+            choice = input("\n\nWhat Day? Enter numerically[1,2,3]. \n q to quit: ")    
             
             if (choice == ""): choice = "1"
             
@@ -70,7 +70,7 @@ if __name__ == "__main__":
                     print ("You've already booked on this day, cancel and try again.")
                 
                 else:
-                    bu.book(data, False)
+                    bu.book(data, False, times)
                     
             if (show_all == "Book" or show_all == "book" or show_all == "b" or show_all == "B"):
                 
@@ -79,7 +79,7 @@ if __name__ == "__main__":
                 else:    
                     isConcurrent = False
                     if (user_decision == "3"): isConcurrent = True
-                    bu.book(data, isConcurrent)
+                    bu.book(data, isConcurrent, times)
         
         elif (user_decision == "2"):
             bu.cancel(data)

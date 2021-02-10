@@ -75,7 +75,11 @@ def print_deltas(idx, time_array):
     print ("\n\n")
     if(idx > 2 and ta[idx - 2]): print("[" + str(idx - 2 + 1) + "] " + ta[idx - 2][0] + "\t\t" + ta[idx - 2][1])
     if(idx > 1 and ta[idx - 1]): print("[" + str(idx - 1 + 1) + "] " + ta[idx - 1][0] + "\t\t" +  ta[idx - 1][1])
-    if(ta[idx]): print("[" + str(idx + 1) + "] " + ta[idx][0] + "\t\t" + ta[idx][1])
+   
+    try:
+        if(ta[idx]): print("[" + str(idx + 1) + "] " + ta[idx][0] + "\t\t" + ta[idx][1])
+    except:
+        return ta
     
     if (idx < len(time_array) - 2):
         print("[" + str(idx + 1 + 1) + "] " + ta[idx + 1][0] + "\t\t" + ta[idx + 1][1])

@@ -21,10 +21,15 @@ import re
 
 '''
 
-def book(data, isConcurrent):
+def book(data, isConcurrent, times):
     user_booking = input("\nEnter the choice as indicated by the []'s: ")
                 
     user_confirmation = input("\nAre you sure you want to book [{}] [Yes|No]:".format(user_booking))
+    
+    if (times[int(user_booking) - 1][1] == "0 spots available"):
+        print ("Your spot is taken, switching to concurrent booking @ 15 requests per minute.")
+        isConcurrent = True
+    
     
     if (user_confirmation == "No"): return
 
@@ -72,6 +77,8 @@ def book(data, isConcurrent):
         if (e_text == "Some times may be unavailable due to conflicting appointments."):
             isConcurrent = False
             
+    
+    print ("\nSuccess!")
 
 def cancel(data):
     print ("Showing reservations..")
@@ -150,7 +157,7 @@ def cancel(data):
             # The things you do for idiot users
             print (string.replace(match.group(1), year))
             
-            return
+            
     
     
     if (list_enabled == []): 

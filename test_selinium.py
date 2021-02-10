@@ -26,9 +26,8 @@ class URL:
         URL_scrape = "https://recwell.purdue.edu/Account/Login?ReturnUrl=%2Fbooking%2F83456ef4-1d99-4e58-8e66-eb049941f7c1"
         URL_login = "https://www.purdue.edu/apps/account/cas/login?service=https%3A%2F%2Fwl.mypurdue.purdue.edu"
         
-        push = "5357,push"
-        
-        user_code = input("Enter your boiler 4 digit pin [Don't worry, it's safe, results are discarded]: ")
+        user_name = input("Enter your boiler username [Dont worry results are discarded after use]: ")
+        user_code = input("Enter your boiler 4 digit pin [Dont worry results are discarded after use]: ")
         code = str(user_code) + ",push"
         
         print ("\nPlease approve the request on duo mobile..")
@@ -36,7 +35,13 @@ class URL:
 class ParsedObject:
     
     def __init__(self):
-        self.driver = webdriver.Chrome(executable_path='C:/Users/garvi/Downloads/chromedriver.exe')
+        
+        options = webdriver.ChromeOptions()
+        options.add_argument("--headless");
+        options.add_argument("--window-size=1440, 900")
+
+        self.driver = webdriver.Chrome(executable_path = 'C:/Users/garvi/Downloads/chromedriver.exe', 
+                                       chrome_options = options)
         self.str = "push" 
         
         self.data_days_o = ""
@@ -47,7 +52,7 @@ class ParsedObject:
     def site_login(self):
             
         self.driver.get (URL.URL_login)
-        self.driver.find_element_by_id("username").send_keys("gjairath")
+        self.driver.find_element_by_id("username").send_keys(URL.user_name)
         self.driver.find_element_by_id ("password").send_keys(URL.code)
         
         submit_btn = self.driver.find_element_by_xpath(
@@ -81,10 +86,10 @@ class ParsedObject:
             user_name = self.driver.find_element_by_id("username")
         except:
             return # something weird happened purdue
-        if (user_name): user_name.send_keys("gjairath")
+        if (user_name): user_name.send_keys(URL.user_name)
         
         password = self.driver.find_element_by_id ("password")
-        if (password): password.send_keys("5357,push")
+        if (password): password.send_keys(URL.code)
         
         submit_btn = self.driver.find_element_by_xpath(
                         "/html/body/div[1]/div[2]/form/fieldset/div[3]/div[2]/input[4]")
@@ -97,11 +102,17 @@ class ParsedObject:
     def retrieve_data(self):
         # flex-center margin-top-24 len is the number of available days.
         # booking-slot-item are the various "cards" that have times.
-     
-        data_days = self.driver.find_element_by_id("divBookingDateSelector")
+        '''
+        TODO
+        '''
+    #    time.sleep(5)
+        
+        data_days = WebDriverWait(self.driver, 20).until(
+                        EC.presence_of_element_located((By.ID, "divBookingDateSelector")))
+
+   #     data_days = self.driver.find_element_by_id("divBookingDateSelector")
         data_time_slots = self.driver.find_element_by_id("divBookingSlots")
         
-        time.sleep(2)
         
         return data_days, data_time_slots
         
