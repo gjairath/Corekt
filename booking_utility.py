@@ -90,7 +90,7 @@ def cancel(data):
     data.parsed.driver.get("https://recwell.purdue.edu/MemberDetails#CourtBook")
     
 
-    
+    time.sleep(2)
     class_cancel = WebDriverWait(data.parsed.driver, 20).until(
             EC.presence_of_element_located((By.ID, "content_CourtBook")))
     
@@ -115,7 +115,7 @@ def cancel(data):
         # These are the rows of all th bookings, some are expired. 
         
         #If a person has made 15 bookings, there are 15 rows, each have like 
-        
+        if (i==size_of_list): break
         row = ir.find_elements_by_tag_name("tr")[i]
         #this is a bad name for a var but I need the additional clarity
         # it contains name, day, time, in the form of webdrivers that each have it or someting idfk.
@@ -133,9 +133,8 @@ def cancel(data):
             
         if (is_cancel_exist): cancel_btn = row.find_element_by_tag_name("button")
     
-        is_enabled = cancel_btn.get_attribute("onclick") #For added good measure.
         
-        if (is_enabled == "ConfirmCancelParticipant(this)"):
+        if (is_cancel_exist == "True"):
             list_enabled.append(row)
             enabled_click.append(cancel_btn)
         else:

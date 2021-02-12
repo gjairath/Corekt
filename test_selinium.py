@@ -38,8 +38,8 @@ class ParsedObject:
     def __init__(self):
         
         options = webdriver.ChromeOptions()
-        options.add_argument("--headless");
-        options.add_argument("--window-size=1440, 900")
+   #     options.add_argument("--headless");
+    #    options.add_argument("--window-size=1440, 900")
 
         self.driver = webdriver.Chrome(executable_path = 'C:/Users/garvi/Downloads/chromedriver.exe', 
                                        chrome_options = options)
