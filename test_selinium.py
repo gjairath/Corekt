@@ -73,14 +73,12 @@ class ParsedObject:
         except TimeoutException:
             print ("Something went wrong.")
             
-        print (element_present)
         
     
-        time.sleep(2)
+        x = "/html/body/div[3]/div[4]/div/div/div/div[2]/div[2]/div[2]/div/button"
+        redirect_btn = WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable((By.XPATH, x)))
         
-        
-        redirect_btn = self.driver.find_element_by_xpath(
-                "/html/body/div[5]/div[4]/div/div/div/div[2]/div[2]/div[2]/div/button")        
         redirect_btn.click()
         
         try:

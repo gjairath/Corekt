@@ -26,7 +26,7 @@ if __name__ == "__main__":
     while (is_true):
         
         user_decision = input("\n[[1] Book | [2] Cancel/View | [3] Concurrent-Booking \
-                                  [4] Auto-Book/Cancel The Least Spot | [5] Quit |]: ")
+                                \n[4] Auto-Book/Cancel The Least Spot | [5] Quit |]: ")
         
         if (user_decision == "1" or user_decision == "3"):
             
@@ -43,23 +43,25 @@ if __name__ == "__main__":
                 print ("Exiting...")
                 exit()
                 
-            x = "/html/body/div[5]/div[1]/div[2]/div[9]/div[2]/div[2]/button[%d]" % int(choice)
-            day_to_click = WebDriverWait(data.parsed.driver, 20).until(
-                    EC.element_to_be_clickable((By.XPATH, x)))
-
-          #  time.sleep(4)    
-       
-#            day_to_click  = data.parsed.driver.find_element_by_xpath(
- #                         "/html/body/div[5]/div[1]/div[2]/div[9]/div[2]/div[2]/button[%d]" % int(choice))
+            id_t = "divBookingDateSelector"
             
-            day_to_click.click()
+            day_header = WebDriverWait(data.parsed.driver, 20).until(
+                            EC.presence_of_element_located((By.ID, id_t)))
+
+            
+            day_to_click = day_header.find_element_by_xpath("//*[@id='divBookingDateSelector']/div[2]/div[2]")
+            days = day_to_click.find_elements_by_tag_name("button")
+
+            
+            days[int(choice)].click()
         
             
             if (choice != 1): data.refetch_data_time()
             
             #displays the time slots.
             times, isBooked = data.processing_data() 
-            
+
+
             gui.prettify(times, days, choice)
             
             show_all = input("===============\n\n See all options? [Yes|No (Go Back)|Book]: ")

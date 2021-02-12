@@ -8,7 +8,7 @@ Filename: process_data.py
 """
 
 import test_selinium as ts
-
+import sys
 
 
 class ProcessData():
@@ -19,6 +19,14 @@ class ProcessData():
         
         #raw array needs to be processed
         #shows first day by default
+        try:
+            string = self.parsed.data_days_o.text
+            string = string[string.find("2021") + 5: ]
+            self.days = string.split("\n")
+        except:
+            print ("The programmer has made a stupid mistake, contact him to fix it. [It's an easy fix]")
+            exit()
+        
         self.days = self.parsed.data_days_o.text.split("2021\n")[1].split("\n")
         self.time_slots = self.parsed.data_time_slots_o.text.split("BOOK NOW\n")
 
