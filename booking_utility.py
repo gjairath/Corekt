@@ -33,9 +33,11 @@ def book(data, isConcurrent, times):
     
     if (user_confirmation == "No"): return
 
-    booking  = data.parsed.driver.find_element_by_xpath(
-        "/html/body/div[5]/div[1]/div[2]/div[11]/div/div[%d]/div/button" % int(user_booking))
-  
+    class_book = data.parsed.driver.find_element_by_class_name("container-flex")
+
+    booking_card = class_book.find_element_by_xpath("(//*[@class='booking-slot-item'])[%d]" % int(user_booking))
+    booking = booking_card.find_element_by_tag_name("button")
+    
     if (isConcurrent == False):
            booking.click()
  
@@ -88,16 +90,21 @@ def cancel(data):
     data.parsed.driver.get("https://recwell.purdue.edu/MemberDetails#CourtBook")
     
 
-    time.sleep(2)
-
+    
+    class_cancel = WebDriverWait(data.parsed.driver, 20).until(
+            EC.presence_of_element_located((By.ID, "content_CourtBook")))
+    
+    try: inner_class = class_cancel.find_element_by_class_name("panel-default")
+    except: inner_class = class_cancel
+    
     #G is a shit name but its basically the entire table content.
-    g = data.parsed.driver.find_element_by_xpath("/html/body/div[5]/div[1]/div[2]/div[5]/div/div/div[7]/form/div/div[2]/div[2]/table")    
+    g = inner_class.find_element_by_tag_name("table")
     
     # l  is the element 1 layer down.
-    l = g.find_element_by_tag_name("tbody")
+    ir = g.find_element_by_tag_name("tbody")
     
     # total number of elements, some are disabled.
-    size_of_list = len(l.text.split("\n"))
+    size_of_list = len(ir.text.split("\n"))
     
     list_enabled = []
     list_disabled = []
@@ -109,21 +116,28 @@ def cancel(data):
         
         #If a person has made 15 bookings, there are 15 rows, each have like 
         
-        row = l.find_element_by_xpath("/html/body/div[5]/div[1]/div[2]/div[5]/div/div/div[7]/form/div/div[2]/div[2]/table/tbody/tr[%d]" % int(i+1))
+        row = ir.find_elements_by_tag_name("tr")[i]
         #this is a bad name for a var but I need the additional clarity
         # it contains name, day, time, in the form of webdrivers that each have it or someting idfk.
         
         # This is a list of 4 WebDriver instances, each have use, name, date, day and cancel.
-        inner_cell_values_of_bookings = row.find_elements_by_tag_name("td")
+        #inner_cell_values_of_bookings = row.find_element_by_tag_name("button")
         
         
         # The thid value is CANCEL. Go one laye down to the button and exampline this value.
-        btn_cancel = inner_cell_values_of_bookings[3].find_element_by_tag_name("button")
-        is_enabled = btn_cancel.get_attribute("data-booking-cancel")
+        #btn_cancel = inner_cell_values_of_bookings[3].find_element_by_tag_name("button")
+        is_cancel_exist = True
+        row_stuff = row.find_elements_by_tag_name("td")[3]
+        if (row_stuff.text == "" or row_stuff.text == ''): 
+            is_cancel_exist = False
+            
+        if (is_cancel_exist): cancel_btn = row.find_element_by_tag_name("button")
+    
+        is_enabled = cancel_btn.get_attribute("onclick") #For added good measure.
         
-        if (is_enabled == "True"):
+        if (is_enabled == "ConfirmCancelParticipant(this)"):
             list_enabled.append(row)
-            enabled_click.append(btn_cancel)
+            enabled_click.append(cancel_btn)
         else:
             list_disabled.append(row)
     

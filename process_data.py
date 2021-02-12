@@ -27,7 +27,7 @@ class ProcessData():
             print ("The programmer has made a stupid mistake, contact him to fix it. [It's an easy fix]")
             exit()
         
-        self.days = self.parsed.data_days_o.text.split("2021\n")[1].split("\n")
+      #  self.days = self.parsed.data_days_o.text.split("2021\n")[1].split("\n")
         self.time_slots = self.parsed.data_time_slots_o.text.split("BOOK NOW\n")
 
     

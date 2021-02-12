@@ -53,7 +53,7 @@ if __name__ == "__main__":
             days = day_to_click.find_elements_by_tag_name("button")
 
             
-            days[int(choice)].click()
+            days[int(choice) - 1].click()
         
             
             if (choice != 1): data.refetch_data_time()
@@ -62,7 +62,7 @@ if __name__ == "__main__":
             times, isBooked = data.processing_data() 
 
 
-            gui.prettify(times, days, choice)
+            gui.prettify(times, days[int(choice) - 1].text.split("\n")[1], choice)
             
             show_all = input("===============\n\n See all options? [Yes|No (Go Back)|Book]: ")
             if (show_all == "Yes"): 
