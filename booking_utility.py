@@ -103,7 +103,7 @@ def cancel(data):
     while(isTrue):
         try:
             g = inner_class.find_element_by_tag_name("table")
-            if (g): isTrue = False
+            isTrue = False
         except:
             time.sleep(0.25)
             print ("s")
@@ -224,15 +224,13 @@ def cancel(data):
         while(isTrue):
             try:
                 desired_confirmation_btn.click()
-            except:
                 
+                isTrue = False
+            except:
                 time.sleep(0.25)
                 i += 1
                 print ("s")
-                if (i == 3): 
-                    print ("Something went wrong, try again")
-                    return
-
+                if (i == 10): break
   
       
 #        desired_confirmation_btn.click()
