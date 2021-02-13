@@ -27,11 +27,11 @@ class URL:
         URL_scrape = "https://recwell.purdue.edu/Account/Login?ReturnUrl=%2Fbooking%2F83456ef4-1d99-4e58-8e66-eb049941f7c1"
         URL_login = "https://www.purdue.edu/apps/account/cas/login?service=https%3A%2F%2Fwl.mypurdue.purdue.edu"
         
-        user_name = input("\n\nEnter your boiler username [Dont worry results are discarded after use]: ")
+        user_name = input("\n\n\n\nEnter your boiler username [Dont worry results are discarded after use]: ")
         user_code = getpass.getpass(prompt="Enter your boiler 4 digit pin [Using Getpass Module...]: ")
         code = str(user_code) + ",push"
         
-        print ("\nPlease approve the request on duo mobile..")
+        print ("\n\n\n\nPlease approve the request on duo mobile..")
         
 class ParsedObject:
     

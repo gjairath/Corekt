@@ -9,20 +9,13 @@ Created on Sat Jan 30 22:03:31 2021
 
 
 '''
-0. Sometimes that second login is instant, sometimes it is not.
-0.1 Upcoming (0) I mean like cancel and track it here.
+0.  Fix concurent, Fix book least, Allow leaving mid way in loops, Fix concurrent for idiot input, 
+    Booking can be sped up Thats why debugger vs terminal was an issue.
+
+1. Error handling to make scrape more robust.
 
 
-1. Change dependancy on XPath to ID. This caused issues.
-2. Add logger
-3. Error handling to make scrape more robust.
-4. Actually process data
-5. Credit relevant sources
-
-
-6. Send email before the cancellation happens, (Dont flood the person jesus.)
-
-7. Basically just deploy this shit and figure it out.
+2. Basically just deploy this shit and figure it out.
     - Send email befoer a cancellation?
     - Keep booking the first spot to end and only NOT cancel it you get it? Its basically like good old day.s
     
@@ -30,10 +23,3 @@ Created on Sat Jan 30 22:03:31 2021
     This shit can b done in a week and I'm done fuly.
     AI 2-3 days and finish. for uriostyg'
 '''
-
-from more_itertools import split_after
-
-
-lst = ["a", "b", "c", "a", "d", "c", "e"]
-list(split_after(penis, lambda x: x == "UNAVAILABLE\n"))
-

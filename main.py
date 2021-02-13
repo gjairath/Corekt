@@ -31,7 +31,10 @@ if __name__ == "__main__":
         if (user_decision == "1" or user_decision == "3"):
             
             data.parsed.driver.get("https://recwell.purdue.edu/booking/83456ef4-1d99-4e58-8e66-eb049941f7c1")
-        
+            
+
+# TODO
+            time.sleep(3)
             days = data.show_days()
             
             choice = input("\n\nWhat Day? Enter numerically [1,2,3]. \n q to quit: ")    
@@ -45,6 +48,7 @@ if __name__ == "__main__":
                 
             id_t = "divBookingDateSelector"
             
+            
             day_header = WebDriverWait(data.parsed.driver, 20).until(
                             EC.presence_of_element_located((By.ID, id_t)))
 
@@ -55,7 +59,10 @@ if __name__ == "__main__":
             
             days[int(choice) - 1].click()
         
-            
+        
+# TODO
+            time.sleep(3)
+    
             if (choice != 1): data.refetch_data_time()
             
             #displays the time slots.

@@ -106,7 +106,8 @@ def cancel(data):
             isTrue = False
         except:
             time.sleep(0.25)
-            print ("s")
+            print("\n\nLoading", end = "")
+            print (".", end = "")
             i += 1
             if (i == 5):
                 isTrue = False
@@ -229,7 +230,8 @@ def cancel(data):
             except:
                 time.sleep(0.25)
                 i += 1
-                print ("s")
+                print("\n\nLoading", end = "")
+                print (".", end = "")
                 if (i == 10): break
   
       
