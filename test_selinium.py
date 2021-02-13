@@ -27,7 +27,7 @@ class URL:
         URL_scrape = "https://recwell.purdue.edu/Account/Login?ReturnUrl=%2Fbooking%2F83456ef4-1d99-4e58-8e66-eb049941f7c1"
         URL_login = "https://www.purdue.edu/apps/account/cas/login?service=https%3A%2F%2Fwl.mypurdue.purdue.edu"
         
-        user_name = input("Enter your boiler username [Dont worry results are discarded after use]: ")
+        user_name = input("\n\nEnter your boiler username [Dont worry results are discarded after use]: ")
         user_code = getpass.getpass(prompt="Enter your boiler 4 digit pin [Using Getpass Module...]: ")
         code = str(user_code) + ",push"
         
@@ -38,8 +38,9 @@ class ParsedObject:
     def __init__(self):
         
         options = webdriver.ChromeOptions()
-   #     options.add_argument("--headless");
-    #    options.add_argument("--window-size=1440, 900")
+        options.add_argument("--headless");
+        options.add_argument("--window-size=1440, 900")
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
         self.driver = webdriver.Chrome(executable_path = 'C:/Users/garvi/Downloads/chromedriver.exe', 
                                        chrome_options = options)

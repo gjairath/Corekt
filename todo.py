@@ -30,3 +30,10 @@ Created on Sat Jan 30 22:03:31 2021
     This shit can b done in a week and I'm done fuly.
     AI 2-3 days and finish. for uriostyg'
 '''
+
+from more_itertools import split_after
+
+
+lst = ["a", "b", "c", "a", "d", "c", "e"]
+list(split_after(penis, lambda x: x == "UNAVAILABLE\n"))
+

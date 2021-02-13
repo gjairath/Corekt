@@ -90,15 +90,28 @@ def cancel(data):
     data.parsed.driver.get("https://recwell.purdue.edu/MemberDetails#CourtBook")
     
 
-    time.sleep(2)
+
     class_cancel = WebDriverWait(data.parsed.driver, 20).until(
             EC.presence_of_element_located((By.ID, "content_CourtBook")))
     
     try: inner_class = class_cancel.find_element_by_class_name("panel-default")
     except: inner_class = class_cancel
     
+    i = 0
+    isTrue = True
     #G is a shit name but its basically the entire table content.
-    g = inner_class.find_element_by_tag_name("table")
+    while(isTrue):
+        try:
+            g = inner_class.find_element_by_tag_name("table")
+            if (g): isTrue = False
+        except:
+            time.sleep(0.25)
+            print ("s")
+            i += 1
+            if (i == 5):
+                isTrue = False
+                print ("Something went wrong, try again")
+                return
     
     # l  is the element 1 layer down.
     ir = g.find_element_by_tag_name("tbody")
@@ -116,7 +129,10 @@ def cancel(data):
         
         #If a person has made 15 bookings, there are 15 rows, each have like 
         if (i==size_of_list): break
-        row = ir.find_elements_by_tag_name("tr")[i]
+    
+        
+        try: row = ir.find_elements_by_tag_name("tr")[i]
+        except: pass
         #this is a bad name for a var but I need the additional clarity
         # it contains name, day, time, in the form of webdrivers that each have it or someting idfk.
         
@@ -134,7 +150,7 @@ def cancel(data):
         if (is_cancel_exist): cancel_btn = row.find_element_by_tag_name("button")
     
         
-        if (is_cancel_exist == "True"):
+        if (is_cancel_exist == True or is_cancel_exist == "True"):
             list_enabled.append(row)
             enabled_click.append(cancel_btn)
         else:
@@ -181,25 +197,51 @@ def cancel(data):
     
     user_choice = input("Enter the choice you want to cancel: ")
    
-    time.sleep(2) #for good measure.
     enabled_click[int(user_choice) - 1].click()
 
-
-    x = "/html/body/div[5]/div[1]/div[2]/div[5]/div/div/div[7]/form/div/div[1]/div/div/div[3]/button[2]"
  
     try:
+        id_cancel = "modalCancelBooking"
         confirm_click = WebDriverWait(data.parsed.driver, 20).until(
-            EC.element_to_be_clickable((By.XPATH, x)))
+            EC.presence_of_element_located((By.ID, id_cancel)))
+        
+        all_buttons = confirm_click.find_elements_by_tag_name("button")
+        
+        
+        for item in all_buttons:
+            #this is flexible, no way they will change their code base they might change the stupid text.
+            if (item.get_attribute("onclick") == "CancelBooking()"):
+                desired_confirmation_btn = item
+            else:
+                desired_confirmation_btn = all_buttons[2]
+        
+        # SUCH an elusive bug really, I was running this in debugger, and the selenium module works so fast,
+                # That it literally clicks an element that doesnt exist and falls into except.
+                # element_to_be_clickable is glitchy, I'm not sure hwy, I rather have a program thats consistent
+                # than something fast
+        isTrue = True
+        i = 0
+        while(isTrue):
+            try:
+                desired_confirmation_btn.click()
+            except:
+                
+                time.sleep(0.25)
+                i += 1
+                print ("s")
+                if (i == 3): 
+                    print ("Something went wrong, try again")
+                    return
+
+  
+      
+#        desired_confirmation_btn.click()
         
     except:
         print ("Something went wrong, try again")
         return
-
-#    time.sleep(3)
-   # print(enabled_click)
     
- #   time.sleep(3)    
-    confirm_click.click()
     
+ #   time.sleep(3)        
     print ("\nSuccess, your booking is cancelled.")
     return

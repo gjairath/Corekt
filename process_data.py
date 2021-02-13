@@ -34,7 +34,9 @@ class ProcessData():
     
     def refetch_data_time(self):
         _, time_slots = self.parsed.retrieve_data()
-        self.time_slots = time_slots.text.split("BOOK NOW\n")
+        string = time_slots.text.replace("UNAVAILABLE", "BOOK NOW")
+        self.time_slots = string.split("BOOK NOW\n")
+
 
     
     def show_days(self):
@@ -83,6 +85,9 @@ class ProcessData():
     
     def reset(self):
         self.days = self.parsed.data_days_o.text.split("2021\n")[1].split("\n")
-        self.time_slots = self.parsed.data_time_slots_o.text.split("BOOK NOW\n")
+        string = self.parsed.data_time_slots_o.text
+        string = string.replace("UNAVAILABLE", "BOOK NOW")
+        
+        self.time_slots = string.split("BOOK NOW\n")
     
     
