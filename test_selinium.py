@@ -21,21 +21,6 @@ import os
 import getpass 
 
 
-from flask import Flask, request, render_template
-
-app = Flask(__name__)
-
-@app.route('/')
-def my_form():
-    return render_template('my-form.html')
-
-@app.route('/', methods=['POST'])
-def my_form_post():
-    text = request.form['text']
-    processed_text = text.upper()
-    return processed_text
-
-
 class URL:
         
         #https://recwell.purdue.edu/booking/83456ef4-1d99-4e58-8e66-eb049941f7c1
@@ -45,10 +30,8 @@ class URL:
         URL_login = "https://www.purdue.edu/apps/account/cas/login?service=https%3A%2F%2Fwl.mypurdue.purdue.edu"
         
         print ("HEY")
-#        user_name = input("\n\n\n\nEnter your boiler username [Dont worry results are discarded after use]: ")
-        user_name = "gjairath"
-        user_code = "5357"
-#        user_code = getpass.getpass(prompt="Enter your boiler 4 digit pin [Using Getpass Module...]: ")
+        user_name = input("\n\n\n\nEnter your boiler username [Dont worry results are discarded after use]: ")
+        user_code = getpass.getpass(prompt="Enter your boiler 4 digit pin [Using Getpass Module...]: ")
         code = str(user_code) + ",push"
         
         print ("\n\n\n\nPlease approve the request on duo mobile..")
