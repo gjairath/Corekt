@@ -45,8 +45,10 @@ class URL:
         URL_login = "https://www.purdue.edu/apps/account/cas/login?service=https%3A%2F%2Fwl.mypurdue.purdue.edu"
         
         print ("HEY")
-        user_name = input("\n\n\n\nEnter your boiler username [Dont worry results are discarded after use]: ")
-        user_code = getpass.getpass(prompt="Enter your boiler 4 digit pin [Using Getpass Module...]: ")
+#        user_name = input("\n\n\n\nEnter your boiler username [Dont worry results are discarded after use]: ")
+        user_name = "gjairath"
+        user_code = "5357"
+#        user_code = getpass.getpass(prompt="Enter your boiler 4 digit pin [Using Getpass Module...]: ")
         code = str(user_code) + ",push"
         
         print ("\n\n\n\nPlease approve the request on duo mobile..")
