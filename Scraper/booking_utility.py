@@ -59,14 +59,14 @@ def get_all_bookings(data):
     
     # IF a user has 10 pages worth of bookigns, 10 pages + 1 for the forward button.
     # ARrays start at 0 ahhaha good joke memes programming humor. 
-    forward_button = pages[len(pages) - 1] 
     
     total_array = []
-
+    counter_loop = 0
     for i in range(len(pages)):       
-        
+        time.sleep(3)
         lower_scroll = data.parsed.driver.find_elements_by_tag_name("tfoot")
         pages = lower_scroll[0].find_elements_by_tag_name("a")
+        forward_button = pages[len(pages) - 1] 
 
     
         string = data.parsed.driver.find_element_by_id("content_Reg").text    
@@ -85,14 +85,33 @@ def get_all_bookings(data):
         total_array.extend(arr)
         
         isClick = True
-        while(isClick):
+        while(isClick and i != len(pages) - 1 and counter_loop <= len(pages)):
             try:
-                pages[i].click()
+                pages[counter_loop].click()
+                if (i == 0): counter_loop += 1
                 isClick = False
+                
             except:
                 time.sleep(0.25)
                 print ("Loading..")
+                
+        counter_loop += 1
     
+    days_frequently_booked = []
+    date_booked = []
+    time_booked = []
+    date_registered = []
+    
+    name = total_array[1].split(" ")[0]    
+    for idx, sub_rows in enumerate(total_array):
+
+        length = sub_rows.find("Reservation:") + 13
+        total_array[idx] = sub_rows[length:]
+        
+        splits = total_array[idx].split("n/a")
+        
+        day_booked =
+        
     return total_array
     
     

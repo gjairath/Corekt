@@ -9,6 +9,14 @@ Created on Sat Jan 30 22:03:31 2021
 
 
 '''
+0. Graphs for User Bookings [Total]
+0. Change the names for files in this scraper. 
+1. Incorporate the gaphs in the main function not in the side one.
+
+1. Graphs for User successful attendance.
+2. AI data collection script deploy.
+3. Fix a few glitches.
+
 -1. Make the website, fix al the 0 stuff, push it up there and make a seperate script version.
 0.5. Add AI shit and finish it off.
     >> Chances of booking to cancel
