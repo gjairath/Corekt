@@ -99,7 +99,6 @@ def get_all_bookings(data):
     
     days_frequently_booked = []
     date_booked = []
-    time_booked = []
     date_registered = []
     
     name = total_array[1].split(" ")[0]    
@@ -110,9 +109,15 @@ def get_all_bookings(data):
         
         splits = total_array[idx].split("n/a")
         
-        day_booked =
         
-    return total_array
+        # THis is done on purpose btw im really smart i would like to say.
+        day_booked = splits[0]
+        days_frequently_booked.append(day_booked)
+        
+        date_booked.append(splits[1])
+        date_registered.append(splits[3])
+        
+    return days_frequenelty_booked, date_booked, date_registered, total_array
     
     
     
