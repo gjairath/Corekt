@@ -62,8 +62,5 @@ if __name__ == "__main__":
         bu.cancel (data)
         
         attended_bookings = bu.get_all_attendance(data)
-        all_bookings = bu.get_all_bookings(data)
-        
-        
-        print ((all_bookings))
-            
+        all_bookings = bu.get_all_bookings(data)        
+                    

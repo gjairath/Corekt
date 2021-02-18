@@ -10,6 +10,11 @@ Created on Sat Jan 30 22:03:31 2021
 
 '''
 0. Graphs for User Bookings [Total]
+
+
+                            Attendance VS Programs
+
+
 0. Change the names for files in this scraper. 
 1. Incorporate the gaphs in the main function not in the side one.
 

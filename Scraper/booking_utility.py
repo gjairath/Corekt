@@ -42,6 +42,26 @@ def get_all_attendance(data):
 
     return arr
 
+
+def make_graphs_bookings(days, dates, date_registered, tot_arr):
+
+    '''
+    Args.
+        Days: The days to show up.
+        Dates: The date to show up.
+        
+        Date_registered: <>
+            
+        tot_arr: THe array with all bookings include no shows and cancellations.
+    
+    Returns
+        The graphs lol
+    '''
+    
+    print(days)
+    
+    return
+
     
 
 def get_all_bookings(data):
@@ -117,11 +137,8 @@ def get_all_bookings(data):
         date_booked.append(splits[1])
         date_registered.append(splits[3])
         
-    return days_frequenelty_booked, date_booked, date_registered, total_array
-    
-    
-    
-    
+    make_graphs_bookings(days_frequenelty_booked, date_booked, date_registered, total_array)
+    return total_array                
 
 
 def cancel(data):
