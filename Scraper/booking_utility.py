@@ -90,7 +90,6 @@ def make_graphs_bookings(days, dates_and_times, name, am_pm, tot_arr):
     
     dates = dates_and_times
     
-    
     # Graph to show a bar plot of the dates the reserations were booked.
     df = pd.DataFrame({'freq': dates})
     
@@ -98,7 +97,7 @@ def make_graphs_bookings(days, dates_and_times, name, am_pm, tot_arr):
     
     plt.xlabel("The Days")
     plt.ylabel("Frequency/Number of Days")
-    plt.title("Frequency of Days Showed {}".format(name))
+    plt.title("Frequency of Days Showed for {}".format(name))
     plt.tight_layout()
     
     plt.show()
@@ -140,7 +139,8 @@ def make_graphs_bookings(days, dates_and_times, name, am_pm, tot_arr):
     data = [am, pm]
     labels = ['AM', 'PM']
     explode = (0.1, 0.1)
-    plt.pie(data, labels = labels, shadow = True, autopct='%1.1f%%', explode = explode, pctdistance=0.65) 
+    plt.pie(data, labels = labels, shadow = True, autopct='%1.1f%%', explode = explode, pctdistance=0.65)
+    plt.title("Percentage of AM/PMs booked for {}".format(name))
     plt.tight_layout()
     plt.show() 
 
