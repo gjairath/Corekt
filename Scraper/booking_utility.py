@@ -43,7 +43,7 @@ def get_all_attendance(data):
     return arr
 
 
-def make_graphs_bookings(days, dates, date_registered, tot_arr):
+def make_graphs_bookings(days, dates_and_times, name, tot_arr):
 
     '''
     Args.
@@ -59,6 +59,28 @@ def make_graphs_bookings(days, dates, date_registered, tot_arr):
     '''
     
     print(days)
+    import pandas as pd
+    import matplotlib.pyplot as plt
+
+    l = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
+    df = pd.DataFrame({'freq': days})
+    
+    df.groupby('freq', as_index=True).size().sort_values().plot(kind='bar', orientation='vertical')
+    
+    plt.xticks(rotation='horizontal')
+    plt.xlabel("The Days")
+    plt.ylabel("Frequency/Number of Days")
+    plt.title("Frequency of Days Showed")
+    plt.show()
+    
+    
+    explode=(0.12, 0.12, 0.12, 0.12, 0.12, 0.12)
+    df.value_counts().plot(kind='pie', labels = l, title = "Pie Chart for Days Booked", \
+                          shadow = True, autopct='%1.1f%%', ylabel = "", explode = explode, pctdistance=0.65)
+        
+    plt.show()
+    
     
     return
 
@@ -118,8 +140,7 @@ def get_all_bookings(data):
         counter_loop += 1
     
     days_frequently_booked = []
-    date_booked = []
-    date_registered = []
+    date_time_array = []
     
     name = total_array[1].split(" ")[0]    
     for idx, sub_rows in enumerate(total_array):
@@ -132,12 +153,17 @@ def get_all_bookings(data):
         
         # THis is done on purpose btw im really smart i would like to say.
         day_booked = splits[0]
-        days_frequently_booked.append(day_booked)
+        day = day_booked.split(" ")[0]
         
-        date_booked.append(splits[1])
-        date_registered.append(splits[3])
+        # For some reason the website acts up with a sunday.
+        if (day == "unday"): day = "Sunday"
+        days_frequently_booked.append(day)
         
-    make_graphs_bookings(days_frequenelty_booked, date_booked, date_registered, total_array)
+        date_show_and_time_show = day_booked.split(",")[1]
+
+        date_time_array.append(date_show_and_time_show)
+        
+    make_graphs_bookings(days_frequently_booked, date_time_array, name, total_array)
     return total_array                
 
 

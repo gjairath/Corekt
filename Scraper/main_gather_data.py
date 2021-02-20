@@ -58,9 +58,12 @@ if __name__ == "__main__":
         times = gui.prettify(times)
         
         
-        print (times)
         bu.cancel (data)
         
         attended_bookings = bu.get_all_attendance(data)
-        all_bookings = bu.get_all_bookings(data)        
+        all_bookings = bu.get_all_bookings(data)
+        
+        
+        
+        
                     
