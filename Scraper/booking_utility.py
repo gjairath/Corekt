@@ -43,7 +43,7 @@ def get_all_attendance(data):
     return arr
 
 
-def make_graphs_bookings(days, dates_and_times, name, tot_arr):
+def make_graphs_bookings(days, dates_and_times, name, am_pm, tot_arr):
 
     '''
     Args.
@@ -57,9 +57,7 @@ def make_graphs_bookings(days, dates_and_times, name, tot_arr):
     Returns
         The graphs lol
     '''
-    
-    print(dates_and_times)
-    
+        
 
     # Lazy import.
     import pandas as pd
@@ -75,14 +73,16 @@ def make_graphs_bookings(days, dates_and_times, name, tot_arr):
     plt.xticks(rotation='horizontal')
     plt.xlabel("The Days")
     plt.ylabel("Frequency/Number of Days")
-    plt.title("Frequency of Days Showed")
+    plt.title("Frequency of Days Showed for {}".format(name))
     plt.tight_layout()
 
     plt.show()
     
     
+    # Graph of a pie chart showing what days the bookings were mostly booked.
+    
     explode=(0.12, 0.12, 0.12, 0.12, 0.12, 0.12)
-    df.value_counts().plot(kind='pie', labels = l, title = "Pie Chart for Days Booked", \
+    df.value_counts().plot(kind='pie', labels = l, title = "Pie Chart for Days Booked {}".format(name), \
                           shadow = True, autopct='%1.1f%%', ylabel = "", explode = explode, pctdistance=0.65)
     plt.tight_layout()        
     plt.show()
@@ -90,17 +90,22 @@ def make_graphs_bookings(days, dates_and_times, name, tot_arr):
     
     dates = dates_and_times
     
+    
+    # Graph to show a bar plot of the dates the reserations were booked.
     df = pd.DataFrame({'freq': dates})
     
     df.groupby('freq', as_index=True).size().sort_values().plot(kind='bar', orientation='vertical')
     
     plt.xlabel("The Days")
     plt.ylabel("Frequency/Number of Days")
-    plt.title("Frequency of Days Showed")
+    plt.title("Frequency of Days Showed {}".format(name))
     plt.tight_layout()
     
     plt.show()
     
+    
+    
+    # Graph to show a scatter plot of the dates it was mostly booked.
     
     import seaborn as sns
     from collections import Counter
@@ -114,6 +119,30 @@ def make_graphs_bookings(days, dates_and_times, name, tot_arr):
     plt.tight_layout()
     
     plt.show()
+    
+    
+    
+    # Graph to show the pie chart of when the person books for showing up, AM/PMs.
+    am = 0
+    pm = 0
+    
+    for elem in am_pm:
+        
+        # If you have something at AM/PM both, like 11AM-12PM its irrelevant lets just call that a border case.
+        # And let it exist as whatever.
+        
+        if (elem.find("AM") == -1):
+            pm +=1
+        
+        if (elem.find("PM") == -1):
+            am += 1
+            
+    data = [am, pm]
+    labels = ['AM', 'PM']
+    explode = (0.1, 0.1)
+    plt.pie(data, labels = labels, shadow = True, autopct='%1.1f%%', explode = explode, pctdistance=0.65) 
+    plt.tight_layout()
+    plt.show() 
 
 
     return
@@ -176,6 +205,8 @@ def get_all_bookings(data):
     days_frequently_booked = []
     date_time_array = []
     
+    am_pm_instances = []
+    
     name = total_array[1].split(" ")[0]    
     for idx, sub_rows in enumerate(total_array):
 
@@ -192,15 +223,17 @@ def get_all_bookings(data):
         # For some reason the website acts up with a sunday.
         if (day == "unday"): day = "Sunday"
         days_frequently_booked.append(day)
-        
-        date_show_and_time_show = day_booked.split(",")[1]
-        
+                
         lf = day_booked.split(",")[1].split(" ")[1:4]
         joiner = " "
+        
+        lf2 = day_booked.split(",")[1].split(" ")[4:]
 
         date_time_array.append(joiner.join(lf))
         
-    make_graphs_bookings(days_frequently_booked, date_time_array, name, total_array)
+        am_pm_instances.append(joiner.join(lf2))
+        
+    make_graphs_bookings(days_frequently_booked, date_time_array, name, am_pm_instances, total_array)
     return total_array                
 
 
