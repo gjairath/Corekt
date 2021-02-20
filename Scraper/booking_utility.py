@@ -58,9 +58,13 @@ def make_graphs_bookings(days, dates_and_times, name, tot_arr):
         The graphs lol
     '''
     
-    print(days)
+    print(dates_and_times)
+    
+
+    # Lazy import.
     import pandas as pd
     import matplotlib.pyplot as plt
+
 
     l = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
@@ -72,16 +76,46 @@ def make_graphs_bookings(days, dates_and_times, name, tot_arr):
     plt.xlabel("The Days")
     plt.ylabel("Frequency/Number of Days")
     plt.title("Frequency of Days Showed")
+    plt.tight_layout()
+
     plt.show()
     
     
     explode=(0.12, 0.12, 0.12, 0.12, 0.12, 0.12)
     df.value_counts().plot(kind='pie', labels = l, title = "Pie Chart for Days Booked", \
                           shadow = True, autopct='%1.1f%%', ylabel = "", explode = explode, pctdistance=0.65)
-        
+    plt.tight_layout()        
     plt.show()
     
     
+    dates = dates_and_times
+    
+    df = pd.DataFrame({'freq': dates})
+    
+    df.groupby('freq', as_index=True).size().sort_values().plot(kind='bar', orientation='vertical')
+    
+    plt.xlabel("The Days")
+    plt.ylabel("Frequency/Number of Days")
+    plt.title("Frequency of Days Showed")
+    plt.tight_layout()
+    
+    plt.show()
+    
+    
+    import seaborn as sns
+    from collections import Counter
+    
+    counter = Counter(dates)
+    df_new = pd.DataFrame.from_dict(counter, orient='index').reset_index()
+    
+    
+    g = sns.scatterplot(x = 'index', y = 0, data = df_new)
+    g.set_xticklabels(rotation=90, labels = df_new['index'])
+    plt.tight_layout()
+    
+    plt.show()
+
+
     return
 
     
@@ -160,8 +194,11 @@ def get_all_bookings(data):
         days_frequently_booked.append(day)
         
         date_show_and_time_show = day_booked.split(",")[1]
+        
+        lf = day_booked.split(",")[1].split(" ")[1:4]
+        joiner = " "
 
-        date_time_array.append(date_show_and_time_show)
+        date_time_array.append(joiner.join(lf))
         
     make_graphs_bookings(days_frequently_booked, date_time_array, name, total_array)
     return total_array                

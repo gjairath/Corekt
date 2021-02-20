@@ -10,26 +10,36 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-day = ['Tuesday', 'Monday', 'Monday', 'Monday', 'Sunday', 'Sunday', 'Sunday', 'Sunday', 'Sunday', 'Sunday', 'Saturday', 'Saturday', 'Saturday', 'Saturday', 'Saturday', 'Saturday', 'Saturday', 'Friday', 'Friday', 'Friday', 'Friday', 'Friday', 'Tuesday', 'Tuesday', 'Sunday', 'Sunday', 'Sunday', 'Sunday', 'Saturday', 'Saturday', 'Saturday', 'Saturday', 'Saturday', 'Saturday', 'Saturday', 'Saturday', 'Saturday', 'Friday', 'Friday', 'Friday', 'Friday', 'Friday', 'Friday', 'Thursday', 'Tuesday', 'Monday', 'Sunday', 'Saturday']
+dates = ['Nov 24 2020', 'Nov 23 2020', 'Nov 23 2020', 'Nov 23 2020', 'Nov 22 2020', 'Nov 22 2020', 'Nov 22 2020', 'Nov 22 2020', 'Nov 22 2020', 'Nov 22 2020', 'Nov 21 2020', 'Nov 21 2020', 'Nov 21 2020', 'Nov 21 2020', 'Nov 21 2020', 'Nov 21 2020', 'Nov 21 2020', 'Nov 20 2020', 'Nov 20 2020', 'Nov 20 2020', 'Nov 20 2020', 'Nov 20 2020', 'Nov 17 2020', 'Nov 17 2020', 'Aug 23 2020', 'Aug 23 2020', 'Aug 23 2020', 'Aug 23 2020', 'Nov 14 2020', 'Nov 14 2020', 'Nov 14 2020', 'Nov 14 2020', 'Nov 14 2020', 'Nov 14 2020', 'Nov 14 2020', 'Nov 14 2020', 'Nov 14 2020', 'Nov 13 2020', 'Nov 13 2020', 'Nov 13 2020', 'Nov 13 2020', 'Nov 13 2020', 'Nov 13 2020', 'Nov 12 2020', 'Nov 10 2020', 'Nov 9 2020', 'Nov 8 2020', 'Nov 7 2020']
 
+import pandas as pd
+import matplotlib.pyplot as plt
 
-
-l = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-
-df = pd.DataFrame({'freq': day})
+df = pd.DataFrame({'freq': dates})
 
 df.groupby('freq', as_index=True).size().sort_values().plot(kind='bar', orientation='vertical')
 
-plt.xticks(rotation='horizontal')
 plt.xlabel("The Days")
 plt.ylabel("Frequency/Number of Days")
 plt.title("Frequency of Days Showed")
+plt.tight_layout()
+
 plt.show()
 
 
-explode=(0.12, 0.12, 0.12, 0.12, 0.12, 0.12)
-df.value_counts().plot(kind='pie', labels = l, title = "Pie Chart for Days Booked", \
-                      shadow = True, autopct='%1.1f%%', ylabel = "",explode = explode, pctdistance=0.65)
-    
+import seaborn as sns
+from collections import Counter
+
+counter = Counter(dates)
+df_new = pd.DataFrame.from_dict(counter, orient='index').reset_index()
+
+
+g = sns.scatterplot(x = 'index', y = 0, data = df_new)
+g.set_xticklabels(rotation=90, labels = df_new['index'])
+plt.tight_layout()
+
 plt.show()
+
+
+
     
