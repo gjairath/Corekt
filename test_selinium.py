@@ -36,23 +36,25 @@ class URL:
         while (notConfirmed == True):
 
             user_name = input("\n\n\n\nEnter your boiler username [Dont worry results are discarded after use]: ")
-            print ("\n\nYour password is being collected with getpass and is discarded after use.")
-            user_choice = input("[1] boilerkey. OR [2]. Duo-code? \nEnter 1 or 2.: ")
+            user_choice = input("\n\nPASSWORD. [1] boilerkey OR [2] Duo-code? \nEnter 1 or 2: ")
             
             if (user_choice == "1"):
                 user_code = getpass.getpass(prompt="Enter your boiler 4 digit pin [Using Getpass Module...]: ")
                 code = str(user_code) + ",push"
-                print ("\n\n\n\nPlease approve the request on duo mobile..")
     
             else:
                 code = getpass.getpass(prompt="Enter your duo code: ")
                 
             
-            input_confirm = input("\nAre you sure of that input? [1] Yes [2] No: \
-                                  \n Enter here: ")
-            if (input_confirm == "1"):
+            input_confirm = input("\n Would you like to try again? [1] Yes [2] No: \
+                                  \n Enter 1 or 2: ")
+            if (input_confirm == "2"):
                 notConfirmed = False
                 break
+            
+        
+        print ("\n\n\n\nIf you used boilerkey, please approve the request. Else, just wait.")
+
             
 
     
@@ -132,8 +134,14 @@ class ParsedObject:
         '''
     #    time.sleep(5)
         
-        data_days = WebDriverWait(self.driver, 20).until(
+        try: data_days = WebDriverWait(self.driver, 20).until(
                         EC.presence_of_element_located((By.ID, "divBookingDateSelector")))
+        
+        
+        except: 
+            print ("Something went wrong with your input, try again.")
+            exit()
+
 
    #     data_days = self.driver.find_element_by_id("divBookingDateSelector")
         data_time_slots = self.driver.find_element_by_id("divBookingSlots")
