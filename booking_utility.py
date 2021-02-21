@@ -39,7 +39,12 @@ def book(data, isConcurrent, times):
     booking = booking_card.find_element_by_tag_name("button")
     
     if (isConcurrent == False):
-           booking.click()
+           try: booking.click()
+           except: print ("\n\n\nSomething weird happened, your spot might have none available. \
+                          \nTry concurrent booking on the main menu.\n")
+           return
+      
+
  
     if (isConcurrent == True):
         print ("\nWhen a spot opens up you'll be the first in line.\n\n")
@@ -50,39 +55,31 @@ def book(data, isConcurrent, times):
 
             # If the element desired is found, then click the booking button and wait for the page to refresh.
         
-        
-        if (counter == 15):
-            # Sleep 30 seconds once you hit every multiple of 15 in terms of requests lmao.
-            # CAnt be risked getting banned you know.
+ 
             
-            time.sleep(30)
-            counter = 0
-            print (".")
-        
-        try:
+        status = True
+        while (status):
             
-            #So when the page reloads, the fucking button is lost in its tracks.
-            booking  = data.parsed.driver.find_element_by_xpath(
-                "/html/body/div[5]/div[1]/div[2]/div[11]/div/div[%d]/div/button" % int(user_booking))
-            booking.click()
-            counter += 1
+            try:
+                print ("\nTimes Clicked: {}".format(counter))
+                #So when the page reloads, the fucking button is lost in its tracks.
+                class_book = data.parsed.driver.find_element_by_class_name("container-flex")
             
-        except:
-            #I dont know. Just sleep and hope it works out lol.
-            time.sleep(2)
-            
+                booking_card = class_book.find_element_by_xpath("(//*[@class='booking-slot-item'])[%d]" % int(user_booking))
+                booking = booking_card.find_element_by_tag_name("button")
+                counter += 1
 
-        element = WebDriverWait(data.parsed.driver, 20).until(
-            EC.presence_of_element_located((By.ID, "divBookingSlots")))
-        
-        
-        e_text = element.text.split("\n")[0]
-        
-        if (e_text == "Some times may be unavailable due to conflicting appointments."):
-            isConcurrent = False
+                booking.click()
+                
+                status = False
+                break
+                
+            except:
+                #I dont know. Just sleep and hope it works out lol.
+                time.sleep(0.25)
             
     
-    print ("\nSuccess!")
+    print ("\n\nSuccess!")
 
 def cancel(data):
     print ("Showing reservations..")
@@ -193,7 +190,7 @@ def cancel(data):
     
     
     if (list_enabled == []): 
-        print ("Bro, no bookings Wtf? go get gains!")
+        print ("\nYou have no bookings. \n")
         return()
     
     user_choice = input("Enter the choice you want to cancel: ")
@@ -238,10 +235,10 @@ def cancel(data):
 #        desired_confirmation_btn.click()
         
     except:
-        print ("Something went wrong, try again")
+        print ("\nSomething went wrong, try again")
         return
     
     
  #   time.sleep(3)        
-    print ("\nSuccess, your booking is cancelled.")
+    print ("\n\nSuccess, your booking is cancelled.\n")
     return

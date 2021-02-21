@@ -29,13 +29,19 @@ if __name__ == "__main__":
     data = pd.ProcessData()
     
     is_true = True
+
+    print ("\n\n\nNote:\n\tThe Corec decided to replace \
+                \n\t0 spots available with No spots available. [You cannot spam book requests for 0 spots] \
+                \n\t\tI.e, they spotted bots on their website (I wonder who has the time to make bots...) \
+                \n\tHowever, this doesn't change anything infact makes my project even more useful.\n\n\n")
     
     while (is_true):
-        
+                
         user_decision = input("\n[[1] Book | [2] Cancel/View | [3] Concurrent-Booking \
                                 \n[4] Auto-Book The Least Spot | [5] Show Fancy Stats For Fun \
                                 \n[6] Quit] \
-                                 \n\nEnter Here:")
+                                 \n\nEnter Your Choice Here:")
+                                 
         
         if (user_decision == "1" or user_decision == "3"):
             
@@ -107,6 +113,7 @@ if __name__ == "__main__":
         elif (user_decision == "4"):
             data.parsed.driver.get("https://recwell.purdue.edu/booking/83456ef4-1d99-4e58-8e66-eb049941f7c1")
         
+            time.sleep(2)
             days = data.show_days()
             
             choice = input("\n\nWhat Day? Enter numerically [1,2,3]. \n q to quit: ")    
@@ -146,8 +153,16 @@ if __name__ == "__main__":
                 spots = int(item[1][0])
                 all_spots.append(spots)
                 
-            desired_val = min(i for i in all_spots if i > 0)
-            desired_idx = all_spots.index(desired_val)
+            # super rare case when literally every booking has the same number of slots.
+                #  On one sunday it was 90 for all of them, the min catch fails.
+            uncaught_exception = False
+            try: desired_val = min(i for i in all_spots if i > 0)
+            except: uncaught_exception = True
+            
+            if (uncaught_exception == True):
+                desired_idx = 0
+            else:
+                desired_idx = all_spots.index(desired_val)
             
             print ("Trying to book spot {} with availability {}"
                    .format(times[desired_idx][0], times[desired_idx][1]))

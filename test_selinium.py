@@ -30,11 +30,32 @@ class URL:
         URL_login = "https://www.purdue.edu/apps/account/cas/login?service=https%3A%2F%2Fwl.mypurdue.purdue.edu"
         
         print ("HEY")
-        user_name = input("\n\n\n\nEnter your boiler username [Dont worry results are discarded after use]: ")
-        user_code = getpass.getpass(prompt="Enter your boiler 4 digit pin [Using Getpass Module...]: ")
-        code = str(user_code) + ",push"
         
-        print ("\n\n\n\nPlease approve the request on duo mobile..")
+        notConfirmed = True
+        
+        while (notConfirmed == True):
+
+            user_name = input("\n\n\n\nEnter your boiler username [Dont worry results are discarded after use]: ")
+            print ("\n\nYour password is being collected with getpass and is discarded after use.")
+            user_choice = input("[1] boilerkey. OR [2]. Duo-code? \nEnter 1 or 2.: ")
+            
+            if (user_choice == "1"):
+                user_code = getpass.getpass(prompt="Enter your boiler 4 digit pin [Using Getpass Module...]: ")
+                code = str(user_code) + ",push"
+                print ("\n\n\n\nPlease approve the request on duo mobile..")
+    
+            else:
+                code = getpass.getpass(prompt="Enter your duo code: ")
+                
+            
+            input_confirm = input("\nAre you sure of that input? [1] Yes [2] No: \
+                                  \n Enter here: ")
+            if (input_confirm == "1"):
+                notConfirmed = False
+                break
+            
+
+    
         
 class ParsedObject:
     
