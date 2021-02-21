@@ -22,6 +22,8 @@ from sys import *
 import booking_utility as bu
 import time
 
+import graph_utility as gu
+
 if __name__ == "__main__":
     
     data = pd.ProcessData()
@@ -31,7 +33,9 @@ if __name__ == "__main__":
     while (is_true):
         
         user_decision = input("\n[[1] Book | [2] Cancel/View | [3] Concurrent-Booking \
-                                \n[4] Auto-Book/Cancel The Least Spot | [5] Quit |]: ")
+                                \n[4] Auto-Book The Least Spot | [5] Show Fancy Stats For Fun \
+                                \n[6] Quit] \
+                                 \n\nEnter Here:")
         
         if (user_decision == "1" or user_decision == "3"):
             
@@ -114,11 +118,19 @@ if __name__ == "__main__":
                 print ("Exiting...")
                 exit()
                 
-            x = "/html/body/div[5]/div[1]/div[2]/div[9]/div[2]/div[2]/button[%d]" % int(choice)
-            day_to_click = WebDriverWait(data.parsed.driver, 20).until(
-                    EC.element_to_be_clickable((By.XPATH, x)))
- 
-            day_to_click.click()
+            time.sleep(2)
+            id_t = "divBookingDateSelector"
+            
+            
+            day_header = WebDriverWait(data.parsed.driver, 20).until(
+                            EC.presence_of_element_located((By.ID, id_t)))
+
+            
+            day_to_click = day_header.find_element_by_xpath("//*[@id='divBookingDateSelector']/div[2]/div[2]")
+            days = day_to_click.find_elements_by_tag_name("button")
+
+            
+            days[int(choice) - 1].click()
         
             
             if (choice != 1): data.refetch_data_time()
@@ -130,19 +142,39 @@ if __name__ == "__main__":
             
             all_spots = list()
             for item in times:
+                if (item[1][0] == 'N'): continue
                 spots = int(item[1][0])
                 all_spots.append(spots)
                 
             desired_val = min(i for i in all_spots if i > 0)
             desired_idx = all_spots.index(desired_val)
             
-            print ("Trying to book spot {} with availability {} and will cancel 15 minutes prior."
+            print ("Trying to book spot {} with availability {}"
                    .format(times[desired_idx][0], times[desired_idx][1]))
             
-            booking  = data.parsed.driver.find_element_by_xpath(
-                "/html/body/div[5]/div[1]/div[2]/div[11]/div/div[%d]/div/button" % (desired_idx + 1))
+            notBooked = True
+            while (notBooked):
+                try:    
+                    class_book = data.parsed.driver.find_element_by_class_name("container-flex")
+                    booking_card = class_book.find_element_by_xpath("(//*[@class='booking-slot-item'])[%d]" % int(desired_idx + 1))
+                    booking = booking_card.find_element_by_tag_name("button")
+                    booking.click()
+                    
+                    notBooked = False
+                    
+                except:
+                    #I dont know. Just sleep and hope it works out lol.
+                    time.sleep(0.25)
+                    print(".", end = "")
+                
             
-            booking.click()
+            print ("\nSuccess. Cancel it on your time.")
+            
+            
+        elif (user_decision == "5"):
+            
+            print("\n\nLoading...")
+            gu.get_all_bookings(data)
 
                     
         else:
