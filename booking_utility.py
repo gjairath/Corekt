@@ -39,7 +39,9 @@ def book(data, isConcurrent, times):
     booking = booking_card.find_element_by_tag_name("button")
     
     if (isConcurrent == False):
-           try: booking.click()
+           try: 
+               booking.click()
+               print("\nSuccess!")
            except: print ("\n\n\nSomething weird happened, your spot might have none available. \
                           \nTry concurrent booking on the main menu.\n")
            return
@@ -154,11 +156,17 @@ def cancel(data):
         else:
             list_disabled.append(row)
     
+    from datetime import date
+    import calendar
+    my_date = date.today()
+
+
     
     see_all = input("\n Would you like to see only active bookings? [Yes|No]: ")
 
     if (see_all == "Yes" or see_all == "y" or see_all == "yes" or see_all == "Y"):
         for i in range(len(list_enabled)):
+            print ("\n\nToday is {} of {}".format(calendar.day_name[my_date.weekday()], my_date) ) 
                        
             print("----------")
             print ("[" + str(i + 1) + "]", end = " ")
@@ -174,7 +182,8 @@ def cancel(data):
                   
     else:
         for i in range(len(list_disabled)):
-                       
+            print ("\n\nToday is {} of {}".format(calendar.day_name[my_date.weekday()], my_date) ) 
+                   
             print("----------")
             print ("[" + str(i + 1) + "]", end = " ")
             
@@ -195,8 +204,10 @@ def cancel(data):
     
     user_choice = input("Enter the choice you want to cancel: ")
    
-    enabled_click[int(user_choice) - 1].click()
-
+    try: enabled_click[int(user_choice) - 1].click()
+    except: 
+        print ("You entered something wrong, try again")
+        return
  
     try:
         id_cancel = "modalCancelBooking"
@@ -239,6 +250,5 @@ def cancel(data):
         return
     
     
- #   time.sleep(3)        
     print ("\n\nSuccess, your booking is cancelled.\n")
     return

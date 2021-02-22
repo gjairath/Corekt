@@ -7,7 +7,7 @@ Created on Sat Feb 20 23:55:50 2021
 
 import time
     
-
+import sys
 
 def first_graph(days, name):
     #Lazy import
@@ -152,7 +152,6 @@ def make_graphs_bookings(days, dates_and_times, name, am_pm, tot_arr):
         
     return
 
-
 def get_all_bookings(data):
     # Program to fidn total bookings.
     data.parsed.driver.get("https://recwell.purdue.edu/MemberDetails#Reg")
@@ -162,8 +161,10 @@ def get_all_bookings(data):
     
     
     # either the page is fucked or something with the pages array, it works in GDB.
+
     
-    time.sleep(3)
+    print("Loading...")
+    time.sleep(2)
     
     lower_scroll = data.parsed.driver.find_elements_by_tag_name("tfoot")
     pages = lower_scroll[0].find_elements_by_tag_name("a")
@@ -173,6 +174,8 @@ def get_all_bookings(data):
     
     total_array = []
     counter_loop = 0
+    
+    print("Navigating your pages...")
     for i in range(len(pages)):       
         time.sleep(3)
         lower_scroll = data.parsed.driver.find_elements_by_tag_name("tfoot")
@@ -202,15 +205,19 @@ def get_all_bookings(data):
                 
             except:
                 time.sleep(0.25)
-                print ("Loading..")
+                print ("\nLoading...")
                 
         counter_loop += 1
+        print ("At page: {}".format(counter_loop))
     
+    print ("Done")
+
     days_frequently_booked = []
     date_time_array = []
     
     am_pm_instances = []
     
+    print ("Processing your data...")
     name = total_array[1].split(" ")[0]    
     for idx, sub_rows in enumerate(total_array):
 
@@ -236,6 +243,9 @@ def get_all_bookings(data):
         date_time_array.append(joiner.join(lf))
         
         am_pm_instances.append(joiner.join(lf2))
-        
+    
+
+    
+    print ("Done\n\n")
     make_graphs_bookings(days_frequently_booked, date_time_array, name, am_pm_instances, total_array)
     return total_array                

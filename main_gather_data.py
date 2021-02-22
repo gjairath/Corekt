@@ -49,7 +49,7 @@ if __name__ == "__main__":
             
 
 # TODO
-            time.sleep(3)
+            time.sleep(2)
             days = data.show_days()
             
             choice = input("\n\nWhat Day? Enter numerically [1,2,3]. \n q to quit: ")    
@@ -76,7 +76,7 @@ if __name__ == "__main__":
         
         
 # TODO
-            time.sleep(3)
+            time.sleep(2)
     
             if (choice != 1): data.refetch_data_time()
             
@@ -192,5 +192,8 @@ if __name__ == "__main__":
             gu.get_all_bookings(data)
 
                     
-        else:
+        elif (user_decision == "6"):
             exit()
+            
+        else:
+            print ("\n\nEnter what the menu says dummy.\n\n")
