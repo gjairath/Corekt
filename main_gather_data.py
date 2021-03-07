@@ -41,10 +41,7 @@ if __name__ == "__main__":
         
 
         if (is_fast == True):
-            print ("[Book] try: book 6:00 pm sunday OR b 5:00pm S or for the especially lazy: b 5:00 p S [PLEASE SPACE OUT INPUT, tie breaker first choice av] \n \
-                   [Concurrent spam] try: steal or s \n  \
-                   [Automate] try: automate or a or A")
-            
+            print ("Try: \n book 6:00 pm Monday or if you're really lazy: b 6 P M [Please space input]\n Try: cancel or cancel all or c all or c show\n Try: automate or a or A [really fucking cool]")
             ud = input("put: ")
             
             if (ud[0] == 'b' or ud[0] == 'B'):
@@ -82,7 +79,7 @@ if __name__ == "__main__":
                 times, isBooked = data.processing_data() 
     
                 if (isBooked):
-                    print ("You've already booked on this day, cancel and try again.")
+                    print ("You've already booked on this day, cancel and try again OR the day is over there are no spots left.")
                     
                 else:
                     bu.book(data, False, times, is_fast, ud)
