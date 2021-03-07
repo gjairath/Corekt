@@ -66,10 +66,10 @@ if __name__ == "__main__":
                 choice = 0
                 
                 day_array = data.days
-                print("These are the days: {}".format(day_array))
                 for item in day_array:
                     if (item.isnumeric()):
                         day_array.remove(item)
+                print("These are the days: {}".format(day_array))
                 
                 for idx, item in enumerate(day_array):
                     # If nothing went wrong the third input is the time?
