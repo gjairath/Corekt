@@ -66,6 +66,7 @@ if __name__ == "__main__":
                 choice = 0
                 
                 day_array = data.days
+                print("These are the days: {}".format(day_array))
                 for item in day_array:
                     if (item.isnumeric()):
                         day_array.remove(item)
@@ -75,7 +76,7 @@ if __name__ == "__main__":
                     if (item[0].lower() == ud.split(" ")[3][0].lower()):
                         choice = idx
                 
-                print ("\nNavigating to...".format(day_array[int(choice)]))
+                print ("\nNavigating to...  {}".format(day_array[(choice)]))
                 days[int(choice)].click()
                 
                 
@@ -88,10 +89,13 @@ if __name__ == "__main__":
                 times, isBooked = data.processing_data() 
     
                 if (isBooked):
-                    print ("You've already booked on this day, cancel and try again OR the day is over there are no spots left.")
+                    print ("You've already booked on this day, cancel and try again OR the day is over there are no spots left.\n\n")
                     
                 else:
                     bu.book(data, False, times, is_fast, ud)
+                    
+            elif (ud[0] == 'C' or ud[0] == 'c'):
+                bu.cancel(data)
 
 
             

@@ -173,7 +173,7 @@ def book(data, isConcurrent, times, is_fast = False, fast_time = None):
                 time.sleep(0.25)
             
     
-    print ("\n\nSuccess!")
+    print ("\n\nSuccess! Your booking is confirmed, check your email.\n\n")
 
 
 def cancel(data):
@@ -269,7 +269,7 @@ def cancel(data):
 
 
     
-    see_all = input("\n Would you like to see only active bookings? [Yes|No]: ")
+    see_all = input("\n\n\n Would you like to see only active bookings? [Yes|No]: ")
 
     if (see_all == "Yes" or see_all == "y" or see_all == "yes" or see_all == "Y"):
         for i in range(len(list_enabled)):
