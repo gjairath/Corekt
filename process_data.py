@@ -13,8 +13,8 @@ import sys
 
 class ProcessData():
     
-    def __init__(self):
-        self.parsed = ts.ParsedObject()
+    def __init__(self, is_fast):
+        self.parsed = ts.ParsedObject(is_fast)
         self.parsed.run()
         
         #raw array needs to be processed

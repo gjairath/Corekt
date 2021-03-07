@@ -15,17 +15,74 @@ import re
 
 #Booking.utility.
 
-'''
- element = WebDriverWait(data.parsed.driver, 20).until(
-     EC.presence_of_element_located((By.ID, "divBookingSlots")))
+def process_raw_trash(ud):
+    '''
+    Parameters
+    ----------
+    ud : array
+        raw data lazy user entered
 
-'''
+    Returns
+    -------
+    Array containing good data 
 
-def book(data, isConcurrent, times):
-    user_booking = input("\nEnter the choice as indicated by the []'s: ")
-                
-    user_confirmation = input("\nAre you sure you want to book [{}] [Yes|No]:".format(user_booking))
+    '''
+    good_array = list()
     
+    # Incase input is not complete, even if it is, 5:30 should become 5:00
+    time_number_char = ud[1][0]
+    time = time_number_char + ":00"
+    
+    # Same as above
+    mode_letter = ud[2]
+    
+    #Default
+    mode = "AM"
+    if (mode_letter[0] == "p" or mode_letter[0] == "P"):
+        mode = "PM"
+    else:
+        mode = "AM"
+        
+    good_array[0] = time
+    good_array[1] = mode
+    good_array[2] = ud[2]
+
+    return good_array
+
+
+def book(data, isConcurrent, times, is_fast = False, fast_time = None):
+    '''
+    Parameters
+    ----------
+    data:                   object that has the user cookies
+    isConcurrent:           stealing a spot: faster or not?
+    is_fast:                less menu options
+    fast_time:              array with data if is_fast
+    
+    Returns
+    -------
+    Void
+    '''
+    
+    if (is_fast == True):
+        parsed_input = process_raw_trash(fast_time)
+        # 5:00 PM M [M is monday]
+        user_booking = -1
+        # Find the spot, 5PM for example, take the index and put it in user_booking
+        for idx, item in enumerate(times):
+            if (item[0].find(parsed_input[1]) != -1 and item[0].find(parsed_input[0]) != -1): 
+                print ("[" + idx+1 + "]", item[0])
+                user_booking = input("\nEnter the choice as indicated by the []'s: ")
+
+        if (user_booking == -1):
+            print ("\n\nSomething went wrong. Try Again")
+            return
+        
+        user_confirmation = "Yes"
+    else:   
+        user_booking = input("\nEnter the choice as indicated by the []'s: ")
+        user_confirmation = input("\nAre you sure you want to book [{}] [Yes|No]:".format(user_booking))
+        
     if (times[int(user_booking) - 1][1] == "0 spots available"):
         print ("Your spot is taken, switching to concurrent booking @ 15 requests per minute.")
         isConcurrent = True

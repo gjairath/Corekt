@@ -20,40 +20,43 @@ import time
 import os
 import getpass 
 
+is_fast_option = False
 
 class URL:
-        
-        #https://recwell.purdue.edu/booking/83456ef4-1d99-4e58-8e66-eb049941f7c1
-        #URL_scrape = "https://recwell.purdue.edu/"
-
         URL_scrape = "https://recwell.purdue.edu/Account/Login?ReturnUrl=%2Fbooking%2F83456ef4-1d99-4e58-8e66-eb049941f7c1"
         URL_login = "https://www.purdue.edu/apps/account/cas/login?service=https%3A%2F%2Fwl.mypurdue.purdue.edu"
         
         print ("HEY")
         
-        notConfirmed = True
-        
-        while (notConfirmed == True):
-
-            user_name = input("\n\n\n\nEnter your boiler username [Dont worry results are discarded after use]: ")
-            user_choice = input("\n\nPASSWORD. [1] boilerkey OR [2] Duo-code? \nEnter 1 or 2: ")
+        def run(self):
+            notConfirmed = True
             
-            if (user_choice == "1"):
-                user_code = getpass.getpass(prompt="Enter your boiler 4 digit pin [Using Getpass Module...]: ")
-                code = str(user_code) + ",push"
+            if (is_fast_option == True):
+                self.user_name = input("Enter name")
+                self.code = getpass.getpass(prompt="Enter code as u would on web: ")
+                
+                
+            while (notConfirmed == True and is_fast_option == False):
     
-            else:
-                code = getpass.getpass(prompt="Enter your duo code: ")
+                self.user_name = input("\n\n\n\nEnter your boiler username [Dont worry results are discarded after use]: ")
+                self.user_choice = input("\n\nPASSWORD. [1] boilerkey OR [2] Duo-code? \nEnter 1 or 2: ")
+                
+                if (self.user_choice == "1"):
+                    user_code = getpass.getpass(prompt="Enter your boiler 4 digit pin [Using Getpass Module...]: ")
+                    self.code = str(user_code) + ",push"
+        
+                else:
+                    self.code = getpass.getpass(prompt="Enter your duo code: ")
+                    
+                
+                input_confirm = input("\n Would you like to try again? [1] Yes [2] No: \
+                                      \n Enter 1 or 2: ")
+                if (input_confirm == "2"):
+                    notConfirmed = False
+                    break
                 
             
-            input_confirm = input("\n Would you like to try again? [1] Yes [2] No: \
-                                  \n Enter 1 or 2: ")
-            if (input_confirm == "2"):
-                notConfirmed = False
-                break
-            
-        
-        print ("\n\n\n\nIf you used boilerkey, please approve the request. Else, just wait.")
+            print ("\n\n\n\nIf you used boilerkey, please approve the request. Else, just wait.")
 
             
 
@@ -61,7 +64,7 @@ class URL:
         
 class ParsedObject:
     
-    def __init__(self):
+    def __init__(self, is_fast):
         
         options = webdriver.ChromeOptions()
         options.add_argument("--headless");
@@ -76,13 +79,16 @@ class ParsedObject:
         self.data_days_o = ""
         self.data_time_slots_o = ""
 
- 
+        global is_fast_option
+        is_fast_option = is_fast
     
     def site_login(self):
             
         self.driver.get (URL.URL_login)
-        self.driver.find_element_by_id("username").send_keys(URL.user_name)
-        self.driver.find_element_by_id ("password").send_keys(URL.code)
+        url_obj = URL()
+        url_obj.run()
+        self.driver.find_element_by_id("username").send_keys(url_obj.user_name)
+        self.driver.find_element_by_id ("password").send_keys(url_obj.code)
         
         submit_btn = self.driver.find_element_by_xpath(
                     "/html/body/div[1]/div[2]/form/fieldset/div[3]/div[2]/input[4]")
