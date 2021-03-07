@@ -10,6 +10,18 @@ import time
 import sys
 
 def first_graph(days, name):
+    '''
+    Parameters
+    ----------
+    days: array of days.
+    name: users name.
+    
+    Returns
+    -------
+    None.
+
+    '''
+
     #Lazy import
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -31,6 +43,17 @@ def first_graph(days, name):
 
 
 def second_graph(days, name):
+    '''
+    Parameters
+    ----------
+    days: array of days.
+    name: users name.
+    
+    Returns
+    -------
+    None.
+
+    '''
     import pandas as pd
     import matplotlib.pyplot as plt
 
@@ -47,6 +70,17 @@ def second_graph(days, name):
     
     
 def third_graph(dates, name):
+    '''
+    Parameters
+    ----------
+    dates: array of dates that the user booked.
+    name: users name.
+    
+    Returns
+    -------
+    None.
+
+    '''
     import pandas as pd
     import matplotlib.pyplot as plt
 
@@ -83,7 +117,17 @@ def fourth_graph(dates, name):
     
     
 def fifth_graph(am_pm, name):
+    '''
+    Parameters
+    ----------
+    am_pm: array of am/pm frequencies.
+    name: users name.
     
+    Returns
+    -------
+    None.
+
+    '''
     import matplotlib.pyplot as plt
 
     # Graph to show the pie chart of when the person books for showing up, AM/PMs.
@@ -153,6 +197,16 @@ def make_graphs_bookings(days, dates_and_times, name, am_pm, tot_arr):
     return
 
 def get_all_bookings(data):
+    '''
+    Parameters
+    ----------
+    data: class object, session tracker
+    
+    Returns
+    -------
+    total_array, containg all relevant data
+
+    '''
     # Program to fidn total bookings.
     data.parsed.driver.get("https://recwell.purdue.edu/MemberDetails#Reg")
     data.parsed.driver.get("https://recwell.purdue.edu/MemberDetails#Reg")

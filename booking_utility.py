@@ -140,7 +140,22 @@ def book(data, isConcurrent, times, is_fast = False, fast_time = None):
     
     print ("\n\nSuccess!")
 
+
 def cancel(data):
+    '''
+    
+
+    Parameters
+    ----------
+    data : class object
+            contains user cookies for session       
+    
+    Returns
+    -------
+    Void
+
+    '''
+    
     print ("Showing reservations..")
     
     data.parsed.driver.get("https://recwell.purdue.edu/MemberDetails#CourtBook")

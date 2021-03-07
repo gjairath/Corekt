@@ -38,6 +38,16 @@ def get_hour_vals(hour):
 
     
 def append_colon_zero(time_array):
+    '''
+    Parameters
+    ----------
+    time_Array: all the times. Raw data ugly needs parsing.
+    
+    Returns
+    -------
+    total_array: cleaned array.
+    
+    '''
 
     # Fix 11 or 12, it currently works for 6 - 7 type formats.
     # Then check again for now.
@@ -69,7 +79,15 @@ def append_colon_zero(time_array):
     return time_array
     
 def print_deltas(idx, time_array):
+    '''
+    Parameters
+    ----------
+    time_array: clean array that is fully processed
     
+    Returns
+    -------
+    time_array: same time array.
+    '''
     ta = append_colon_zero(time_array)
     
     print ("\n\n")
@@ -89,6 +107,17 @@ def print_deltas(idx, time_array):
     return ta
 
 def prettify(time_array, day, choice):    
+    '''
+    Parameters
+    ----------
+    time_array: clean time array
+    day:        the day
+    choice:     users choice for the day    
+    Returns
+    -------
+    None.
+
+    '''
     
     print ("\t SHOWING SLOTS for: {}\n\n".format(day))    
 
