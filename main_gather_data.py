@@ -24,6 +24,8 @@ if __name__ == "__main__":
         if (sys.argv[1] == "-f"):
             is_fast = True
     
+    #Debugging
+    is_fast = True
     data = pd.ProcessData(is_fast)
     
     is_true = True
@@ -35,14 +37,14 @@ if __name__ == "__main__":
                     \n\tHowever, this doesn't change anything infact makes my project even more useful.\n\n\n")
         
         print ("\n\n\n\n\t=== Corekt === ")
-        print ("\t\t A fuck you to all jocks world-wide.\n\n")
+        print ("\t\t A fuck you to all jocks world-wide.\n\nIf you want to use the faster alt, -f argv")
         
     while (is_true):
         
 
         if (is_fast == True):
-            print ("Try: \n book 6:00 pm Monday or if you're really lazy: b 6 P M [Please space input]\n Try: cancel or cancel all or c all or c show\n Try: automate or a or A [really fucking cool]")
-            ud = input("put: ")
+            print (" Try: book 6:00 pm Monday or if you're really lazy: b 6 P M [Please space input]\n Try: cancel or cancel all or c all or c show\n Try: automate or a or A [really fucking cool]")
+            ud = input("\n\nput: ")
             
             if (ud[0] == 'b' or ud[0] == 'B'):
                 
@@ -62,12 +64,19 @@ if __name__ == "__main__":
                 days = day_to_click.find_elements_by_tag_name("button")
                 
                 choice = 0
-                for idx, item in enumerate(days):
+                
+                day_array = data.days
+                for item in day_array:
+                    if (item.isnumeric()):
+                        day_array.remove(item)
+                
+                for idx, item in enumerate(day_array):
                     # If nothing went wrong the third input is the time?
-                    if (item[0] == ud[3][0]):
+                    if (item[0].lower() == ud.split(" ")[3][0].lower()):
                         choice = idx
                 
-                days[int(choice) - 1].click()
+                print ("\nNavigating to...".format(day_array[int(choice)]))
+                days[int(choice)].click()
                 
                 
                           

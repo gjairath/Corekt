@@ -32,8 +32,9 @@ class URL:
             notConfirmed = True
             
             if (is_fast_option == True):
-                self.user_name = input("Enter name")
-                self.code = getpass.getpass(prompt="Enter code as u would on web: ")
+                print ("If you're using fast option, it is recommended you try the main program first.\n")
+                self.user_name = input("Enter name: ")
+                self.code = getpass.getpass(prompt="Enter code as u would on web with push or whatever: ")
                 
                 
             while (notConfirmed == True and is_fast_option == False):

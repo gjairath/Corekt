@@ -13,6 +13,8 @@ import time
 import sys
 import re
 
+import gui_utility as gui
+
 #Booking.utility.
 
 def process_raw_trash(ud):
@@ -27,7 +29,7 @@ def process_raw_trash(ud):
     Array containing good data 
 
     '''
-    good_array = list()
+    good_array = [None, None, None]
     
     # Incase input is not complete, even if it is, 5:30 should become 5:00
     time_number_char = ud[1][0]
@@ -50,6 +52,39 @@ def process_raw_trash(ud):
     return good_array
 
 
+def get_times(parsed, time_array):
+    '''    
+    Args
+        Parsed: Array with data that is clean from lazy input
+        time_array: dirty time array
+    Returns
+        time_array: Clean time array with deltas on screen
+
+    '''
+    
+    
+    
+    hour = parsed[0]
+    mode_day = parsed[1]
+    user_pref = gui.get_hour_vals(hour)
+    
+    # if the user says 11:45 take 11, traverse the time array and simply print a delta.
+    idx = 0
+    
+    for loop_idx, item in enumerate(time_array):
+        if (int(user_pref) >= 10):            
+            if (item[0][0] == user_pref[0] and item[0][1] == user_pref[1] and item[0].find(mode_day) != -1):
+                # This hour slot matches. 
+                idx = loop_idx
+        else:
+            if (item[0][0] == user_pref[0] and item[0].find(mode_day) != -1):
+                idx = loop_idx
+    
+    # show the deltas.
+    time_array = gui.print_deltas(idx, time_array)
+    
+    return time_array
+
 def book(data, isConcurrent, times, is_fast = False, fast_time = None):
     '''
     Parameters
@@ -65,14 +100,14 @@ def book(data, isConcurrent, times, is_fast = False, fast_time = None):
     '''
     
     if (is_fast == True):
-        parsed_input = process_raw_trash(fast_time)
+        parsed_input = process_raw_trash(fast_time.split(" "))
         # 5:00 PM M [M is monday]
         user_booking = -1
         # Find the spot, 5PM for example, take the index and put it in user_booking
-        for idx, item in enumerate(times):
-            if (item[0].find(parsed_input[1]) != -1 and item[0].find(parsed_input[0]) != -1): 
-                print ("[" + idx+1 + "]", item[0])
-                user_booking = input("\nEnter the choice as indicated by the []'s: ")
+        print ("You said: {}".format(fast_time))
+        get_times(parsed_input, times)
+        
+        user_booking = input("\nEnter the choice as indicated by the []'s: ")
 
         if (user_booking == -1):
             print ("\n\nSomething went wrong. Try Again")
@@ -99,7 +134,7 @@ def book(data, isConcurrent, times, is_fast = False, fast_time = None):
            try: 
                booking.click()
                print("\nSuccess!")
-           except: print ("\n\n\nSomething weird happened, your spot might have none available. \
+           except: print ("\n\n\nSomething weird happened, your spot might have none available OR you already have a spot on this day booked. \
                           \nTry concurrent booking on the main menu.\n")
            return
       
