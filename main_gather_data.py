@@ -15,6 +15,7 @@ import booking_utility as bu
 import time
 
 import graph_utility as gu
+import automate_utility as au
 
 
 if __name__ == "__main__":
@@ -43,7 +44,7 @@ if __name__ == "__main__":
         
 
         if (is_fast == True):
-            print (" Try: book 6:00 pm Monday or if you're really lazy: b 6 P M [Please space input]\n Try: cancel or cancel all or c all or c show\n Try: automate or a or A [really fucking cool]")
+            print ("\n\n Try: book 6:00 pm Monday or if you're really lazy: b 6 P M [Please space input]\n Try: cancel or cancel all or c all or c show\n Try: automate or a or A [really fucking cool]\n Try: Quit")
             ud = input("\n\nput: ")
             
             if (ud[0] == 'b' or ud[0] == 'B'):
@@ -96,6 +97,15 @@ if __name__ == "__main__":
                     
             elif (ud[0] == 'C' or ud[0] == 'c'):
                 bu.cancel(data)
+                
+                
+            elif (ud[0] == "a" or ud[0] == "A"):
+                # User chose automate, find his name first.
+                au.automate(data)
+                pass
+            
+            else:
+                sys.exit()
 
 
             

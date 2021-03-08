@@ -78,7 +78,7 @@ def third_graph(dates, name):
     
     Returns
     -------
-    None.
+    A graph with freq of days.
 
     '''
     import pandas as pd
@@ -196,7 +196,7 @@ def make_graphs_bookings(days, dates_and_times, name, am_pm, tot_arr):
         
     return
 
-def get_all_bookings(data):
+def get_all_bookings(data, is_name = False):
     '''
     Parameters
     ----------
@@ -217,7 +217,7 @@ def get_all_bookings(data):
     # either the page is fucked or something with the pages array, it works in GDB.
 
     
-    print("Loading...")
+    print("\nLoading...")
     time.sleep(2)
     
     lower_scroll = data.parsed.driver.find_elements_by_tag_name("tfoot")
@@ -271,8 +271,10 @@ def get_all_bookings(data):
     
     am_pm_instances = []
     
-    print ("Processing your data...")
+    print ("Processing your data...\n\n")
     name = total_array[1].split(" ")[0]    
+
+
     for idx, sub_rows in enumerate(total_array):
 
         length = sub_rows.find("Reservation:") + 13
@@ -301,5 +303,8 @@ def get_all_bookings(data):
 
     
     print ("Done\n\n")
+    return_array = [days_frequently_booked, date_time_array, name, am_pm_instances, total_array]
+    if (is_name == True):
+        return return_array
     make_graphs_bookings(days_frequently_booked, date_time_array, name, am_pm_instances, total_array)
     return total_array                
