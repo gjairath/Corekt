@@ -40,7 +40,7 @@ class URL:
             while (notConfirmed == True and is_fast_option == False):
     
                 self.user_name = input("\n\n\n\nEnter your boiler username [Dont worry results are discarded after use]: ")
-                self.user_choice = input("\n\nPASSWORD. [1] boilerkey OR [2] Duo-code? \nEnter 1 or 2: ")
+                self.user_choice = input("\n\nPASSWORD. [1] boilerkey (4digits without push) OR [2] Duo-code (6digits)? \nEnter 1 or 2: ")
                 
                 if (self.user_choice == "1"):
                     user_code = getpass.getpass(prompt="Enter your boiler 4 digit pin [Using Getpass Module...]: ")
@@ -73,8 +73,7 @@ class ParsedObject:
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
 
-        self.driver = webdriver.Chrome(executable_path = 'C:/Users/garvi/Downloads/chromedriver.exe', 
-                                       chrome_options = options)
+        self.driver = webdriver.Chrome(chrome_options = options)
         self.str = "push" 
         
         self.data_days_o = ""
@@ -120,10 +119,16 @@ class ParsedObject:
             user_name = self.driver.find_element_by_id("username")
         except:
             return # something weird happened purdue
-        if (user_name): user_name.send_keys(URL.user_name)
+        try:
+            if (user_name): user_name.send_keys(URL.user_name)
+        except:
+            print ("You entered it wrong.\nTry again.\n")
         
         password = self.driver.find_element_by_id ("password")
-        if (password): password.send_keys(URL.code)
+        try:
+            if (password): password.send_keys(URL.code)
+        except:
+            print ("You entered it wrong.\nTry again.\n")
         
         submit_btn = self.driver.find_element_by_xpath(
                         "/html/body/div[1]/div[2]/form/fieldset/div[3]/div[2]/input[4]")

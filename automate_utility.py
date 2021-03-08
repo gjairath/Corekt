@@ -160,4 +160,4 @@ def automate(data, time_array):
     print ("\n\nThis is currently a work in progress, check back later.\n\n")
 
 
-automate(None)
+#automate(None, None)

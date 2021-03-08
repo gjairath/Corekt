@@ -26,7 +26,6 @@ if __name__ == "__main__":
             is_fast = True
     
     #Debugging
-    is_fast = True
     data = pd.ProcessData(is_fast)
     
     is_true = True

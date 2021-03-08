@@ -273,18 +273,35 @@ def cancel(data):
 
     if (see_all == "Yes" or see_all == "y" or see_all == "yes" or see_all == "Y"):
         for i in range(len(list_enabled)):
+            current_day = calendar.day_name[my_date.weekday()]
             print ("\n\nToday is {} of {}".format(calendar.day_name[my_date.weekday()], my_date) ) 
-                       
+
+            date_full = "Mar 10 2021"
+            #I know that march 8 monday.
+            # I want to display WEDNESDAY
+            
+            # ---- This code may be confusing, it's making up for inadequencies on purdue's website --
+            # There is no day displayed on cancel. Lol wtf?
+            # Like 6 lines of code bro.
+            
+            date_date = date_full.split(" ")[1]
+            deficit_days = int(date_date) - 8
+            
+            day_name= ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday','Sunday']
+            
+            day_booked = day_name[day_name.index(current_day) + deficit_days]
+
             print("----------")
             print ("[" + str(i + 1) + "]", end = " ")
             
             string = list_enabled[i].text.split(",")[1].split("CANCEL")[0]
             
             match = re.match(r'.*([1-3][0-9]{3})', string)
-            year = match.group(1) + "    " #for some reason this is the only way
+            year = day_booked + "    " + match.group(1) + "    " #for some reason this is the only way
             
             # The things you do for idiot users
             print (string.replace(match.group(1), year))
+#            print (day_booked)
             
                   
     else:
