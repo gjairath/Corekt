@@ -19,14 +19,22 @@ REPLACE_ME = [['Tuesday', 'Monday', 'Monday', 'Monday', 'Sunday', 'Sunday', 'Sun
 ta = [['6:00 AM - 7:00 AM', '46 spots available'], ['6:20 AM - 7:40 AM', '46 spots available'], ['6:40 AM - 8:00 AM', '63 spots available'], ['7:00 AM - 8:00 AM', '64 spots available'], ['7:20 AM - 8:40 AM', '68 spots available'], ['7:40 AM - 9:00 AM', '69 spots available'], ['8:00 AM - 9:00 AM', '79 spots available'], ['8:20 AM - 9:40 AM', '67 spots available'], ['8:40 AM - 10:00 AM', '73 spots available'], ['9:00 AM - 10:00 AM', '73 spots available'], ['9:20 AM - 10:40 AM', '77 spots available'], ['9:40 AM - 11:00 AM', '76 spots available'], ['10:00 AM - 11:00 AM', '84 spots available'], ['10:20 AM - 11:40 AM', '83 spots available'], ['10:40 AM - 12:00 PM', '83 spots available'], ['11:00 AM - 12:00 PM', '83 spots available'], ['11:20 AM - 12:40 PM', '87 spots available'], ['11:40 AM - 1:00 PM', '77 spots available'], ['12:00 PM - 1:00 PM', '84 spots available'], ['12:20 PM - 1:40 PM', '89 spots available'], ['12:40 PM - 2:00 PM', '85 spots available'], ['1:00 PM - 2:00 PM', '85 spots available'], ['1:20 PM - 2:40 PM', '84 spots available'], ['1:40 PM - 3:00 PM', '83 spots available'], ['2:00 PM - 3:00 PM', '89 spots available'], ['2:20 PM - 3:40 PM', '87 spots available'], ['2:40 PM - 4:00 PM', '81 spots available'], ['3:00 PM - 4:00 PM', '80 spots available'], ['3:20 PM - 4:40 PM', '73 spots available'], ['3:40 PM - 5:00 PM', '76 spots available'], ['4:00 PM - 5:00 PM', '79 spots available'], ['4:20 PM - 5:40 PM', '80 spots available'], ['4:40 PM - 6:00 PM', '77 spots available'], ['5:00 PM - 6:00 PM', '84 spots available'], ['5:20 PM - 6:40 PM', '75 spots available'], ['5:40 PM - 7:00 PM', '82 spots available'], ['6:00 PM - 7:00 PM', '84 spots available'], ['6:20 PM - 7:40 PM', '79 spots available'], ['6:40 PM - 8:00 PM', '83 spots available'], ['7:00 PM - 8:00 PM', '85 spots available'], ['7:20 PM - 8:40 PM', '83 spots available'], ['7:40 PM - 9:00 PM', '84 spots available'], ['8:00 PM - 9:00 PM', '77 spots available'], ['8:20 PM - 9:40 PM', '82 spots available'], ['8:40 PM - 10:00 PM', '81 spots available'], ['9:00 PM - 10:00 PM', '88 spots available']]
 
 
+def top_k_occuring(time_slots, k = 3):
+        
+    # Lazy import good idea?
+    from collections import Counter
+    c = Counter(time_slots)
+    return c.most_common(k)
 
-def automate_today(data):
+
+def automate_today(data, most_occuring_array):
     """
 
     Parameters
     ----------
     data : users cookies stored in class object.
-
+    moa : array with users favorite time slots.
+    
     Returns
     -------
     None.
@@ -55,7 +63,7 @@ def automate_today(data):
     print ("Scanning total spots available...")
     
     days[0].click()
-    times, isBooked = data.processing_data() 
+    times, isBooked = data.processing_data()
     
     for values in times:
         # Find this users favorite time slot, for the desired TIME and book it for all days.
@@ -153,11 +161,25 @@ def automate(data, time_array):
     print ("Your preferred time of the day is: \t{}\n".format(mode))
     
     
+        
+    top = top_k_occuring(REPLACE_ME[3])
+    
+    # Array containing users favorite spots with desired time of the day.
+    most_occuring_slot_array = list()
+    for item in top:
+        most_occuring_slot_array.append(item[0])
+    
+    print ("Your favorite spots are: ")    
+    for item in most_occuring_slot_array:
+        print ("\t" + item)
     
     
-    
+    # ---------------------
+        # TODO
+    #automate_today(data, most_occuring_slot_array)
+    # ---------------------
     
     print ("\n\nThis is currently a work in progress, check back later.\n\n")
 
 
-#automate(None, None)
+automate(None, None)

@@ -163,9 +163,11 @@ class ParsedObject:
         
     # Mostly for debugging purposes.
     def write_data(self, obj_days, obj_time):
-        str_cat = "_LOG_DAYS_AND_SLOTS"
-        file_o = open(str_cat, "w")
-            
+        str_cat = "debug_data.tct"
+        file_o = open(str_cat, "w+")
+        
+        file_o.write("\n\n\n\n---------------------\n\n\n\n")
+        
         for item in obj_days.text:
             file_o.writelines(item)
     
