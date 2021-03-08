@@ -27,7 +27,7 @@ def top_k_occuring(time_slots, k = 3):
     return c.most_common(k)
 
 
-def automate_today(data, most_occuring_array):
+def automate_today(data, moa):
     """
 
     Parameters
@@ -65,21 +65,32 @@ def automate_today(data, most_occuring_array):
     days[0].click()
     times, isBooked = data.processing_data()
     
-    for values in times:
+    import random
+    delta_idx = random.randint(0,25) # default fail-safe lol
+    
+    for idx, values in enumerate(times):
         # Find this users favorite time slot, for the desired TIME and book it for all days.
         
         # IF the user forgets to turn on his script or whatever, send an email or just cancel it.
             # CANT RISK GETTING BANNED. 24 hours then 48 then fucking permanent thats insane...
-            # Even mordern day jails are more liberal.
+            # Even mordern-day jails are more liberal.
         
         #Keep swapping it if the user doesnt cancel it, so find a nice spot say 5PM,
         #IF the user doesnt "ACCEPT" the booking, auto cancel and push back to a new spot.
         
         # THis is basically PRECOVID gym going expierence.
         # You just show up. No dumb bookings.
+            # I still dont understand why I spent a month of my life building this 
         
+        # ----------------------------
+        # moa has the 3-4 top most favorite spots, we have a delta. just need to find least such spot,
+        # book it and schdule its cancellation on a parelle processor.
         
-        pass        
+        # The first item in moa is the earliest spot in times array, so we have an index too.
+            # So that means within +/- 1 index of this just keep booking it, and cancel it and so forth.
+        
+        if (values[0] == moa[0]):
+            delta_idx = idx
       
     
 
@@ -167,11 +178,14 @@ def automate(data, time_array):
     # Array containing users favorite spots with desired time of the day.
     most_occuring_slot_array = list()
     for item in top:
-        most_occuring_slot_array.append(item[0])
+        desired_val = item[0].replace('to', '-')
+        most_occuring_slot_array.append(desired_val)
+    
+    most_occuring_slot_array.sort()
     
     print ("Your favorite spots are: ")    
     for item in most_occuring_slot_array:
-        print ("\t" + item)
+        print ("\t\t\t\t\t" + item)
     
     
     # ---------------------
