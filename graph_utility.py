@@ -221,8 +221,11 @@ def get_all_bookings(data, is_name = False):
     time.sleep(2)
     
     lower_scroll = data.parsed.driver.find_elements_by_tag_name("tfoot")
-    pages = lower_scroll[0].find_elements_by_tag_name("a")
-    
+    try:
+        pages = lower_scroll[0].find_elements_by_tag_name("a")
+    except:
+        print ("something went wrong. You might not have adequate data to show. Fitness is not a bad idea, you know.")
+        return 
     # IF a user has 10 pages worth of bookigns, 10 pages + 1 for the forward button.
     # ARrays start at 0 ahhaha good joke memes programming humor. 
     

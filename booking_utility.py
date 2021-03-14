@@ -107,7 +107,7 @@ def book(data, isConcurrent, times, is_fast = False, fast_time = None):
         print ("You said: {}".format(fast_time))
         get_times(parsed_input, times)
         
-        user_booking = input("\nEnter the choice as indicated by the []'s: ")
+        user_booking = input("\nEnter the choice as indicated by the []'s 30 or 25 or 1 etc.: ")
 
         if (user_booking == -1):
             print ("\n\nSomething went wrong. Try Again")
@@ -133,15 +133,15 @@ def book(data, isConcurrent, times, is_fast = False, fast_time = None):
     if (isConcurrent == False):
            try: 
                booking.click()
-               print("\nSuccess!")
-           except: print ("\n\n\nSomething weird happened, your spot might have none available OR you already have a spot on this day booked. \
-                          \nTry concurrent booking on the main menu.\n")
+               print("\nSuccess! booked spot: {}".format(booking.text))
+           except: print ("\n\n\nSomething weird happened, you may already have a spot on this day booked. \
+                          Try concurrent booking on the main menu. [If it had 0 spots available] \n")
            return
       
 
  
     if (isConcurrent == True):
-        print ("\nWhen a spot opens up you'll be the first in line.\n\n")
+        print ("\nWhen a spot opens up you'll be the first in line.")
         print ("Loading", end = "")
     
     counter = 0
@@ -156,6 +156,7 @@ def book(data, isConcurrent, times, is_fast = False, fast_time = None):
             
             try:
                 print ("\nTimes Clicked: {}".format(counter))
+                print ("\t Either quit terminal or spam CTRl+C or CTRl+Z depending on your OS")
                 #So when the page reloads, the fucking button is lost in its tracks.
                 class_book = data.parsed.driver.find_element_by_class_name("container-flex")
             
@@ -170,7 +171,7 @@ def book(data, isConcurrent, times, is_fast = False, fast_time = None):
                 
             except:
                 #I dont know. Just sleep and hope it works out lol.
-                time.sleep(0.25)
+                time.sleep(0.1)
             
     
     print ("\n\nSuccess! Your booking is confirmed, check your email.\n\n")
@@ -197,8 +198,12 @@ def cancel(data):
     
 
 
-    class_cancel = WebDriverWait(data.parsed.driver, 20).until(
+    try:
+        class_cancel = WebDriverWait(data.parsed.driver, 20).until(
             EC.presence_of_element_located((By.ID, "content_CourtBook")))
+    except:
+        print ("something went wrong")
+        return
     
     try: inner_class = class_cancel.find_element_by_class_name("panel-default")
     except: inner_class = class_cancel
@@ -217,7 +222,7 @@ def cancel(data):
             i += 1
             if (i == 5):
                 isTrue = False
-                print ("Something went wrong, try again")
+                print ("Something went wrong, try again, you may not have bookings.")
                 return
     
     # l  is the element 1 layer down.
@@ -280,17 +285,18 @@ def cancel(data):
             #I know that march 8 monday.
             # I want to display WEDNESDAY
             
-            # ---- This code may be confusing, it's making up for inadequencies on purdue's website --
-            # There is no day displayed on cancel. Lol wtf?
-            # Like 6 lines of code bro.
+        # ---- This code may be confusing, it's making up for inadequencies on purdue's website 
+        # There is no day displayed on cancel on the website, so I cannot scrape it off. Lol wtf?
+        
             
             date_date = date_full.split(" ")[1]
             deficit_days = int(date_date) - 8
             
             day_name= ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday','Sunday']
             
-            day_booked = day_name[day_name.index(current_day) + deficit_days]
-
+            try: day_booked = day_name[day_name.index(current_day) + deficit_days]
+            except: day_booked = "->"
+            
             print("----------")
             print ("[" + str(i + 1) + "]", end = " ")
             

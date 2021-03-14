@@ -40,17 +40,17 @@ class URL:
             while (notConfirmed == True and is_fast_option == False):
     
                 self.user_name = input("\n\n\n\nEnter your boiler username [Dont worry results are discarded after use]: ")
-                self.user_choice = input("\n\nPASSWORD. [1] boilerkey (4digits without push) OR [2] Duo-code (6digits)? \nEnter 1 or 2: ")
+                self.user_choice = input("\n\nPASSWORD.\n[1] boilerkey (4digits without the string push or comma) OR [2] Duo-code (10 digits 4boilerpin + duo6digits)? \nEnter 1 or 2: ")
                 
                 if (self.user_choice == "1"):
-                    user_code = getpass.getpass(prompt="Enter your boiler 4 digit pin [Using Getpass Module...]: ")
+                    user_code = getpass.getpass(prompt="Enter your boiler 4 digit pin [Using Getpass Module... You wont see the cursor move for obvious security reasons]: ")
                     self.code = str(user_code) + ",push"
         
                 else:
                     self.code = getpass.getpass(prompt="Enter your duo code: ")
                     
                 
-                input_confirm = input("\n Would you like to try again? [1] Yes [2] No: \
+                input_confirm = input("\n Would you like to submit the form again? [1] Yes [2] No: \
                                       \n Enter 1 or 2: ")
                 if (input_confirm == "2"):
                     notConfirmed = False
