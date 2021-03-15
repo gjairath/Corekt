@@ -1,5 +1,6 @@
 # Corekt
 An easier way for me to reserve a corec spot without fail. 
+If you dont have a boiler associated account or credentials this is pretty irrelevant for you.
 
 
 python main_gather_data.py 
