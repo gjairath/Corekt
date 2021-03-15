@@ -61,7 +61,11 @@ class ProcessData():
         if (len(self.time_slots) == 1):
             self.time_slots = self.time_slots[0].split("UNAVAILABLE")
             isBooked = True
-            
+        
+        if (self.time_slots == []):
+            print ("Something went wrong... Restart the program, this is a work-in-progress. Use the slower version instead.")
+            sys.exit()
+        
         self.time_slots.pop(0)
 
 

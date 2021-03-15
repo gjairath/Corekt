@@ -62,7 +62,10 @@ def automate_today(data, moa):
     print ("Scanning total spots available...")
     
     days[0].click()
-    time, isBooked = data.processing_data()
+    try: time, isBooked = data.processing_data()
+    except: 
+        print ("Something went wrong, try again later.")
+        return
     
     times = gui.append_colon_zero(time)
     
@@ -98,10 +101,13 @@ def automate_today(data, moa):
             print ("Success")
             delta_idx = idx
       
-    print (delta_idx)
-    print (moa)
-    print (times[delta_idx])
-    
+    try: 
+        print (delta_idx)
+        print (moa)
+        print (times[delta_idx])
+    except:
+        print ("Cant find delta's, something went wrong")
+        return
     # delta_idx has the delta for the users favorite spot, now just begin booking and swapping.
   
     
@@ -169,14 +175,19 @@ def automate(data):
     """
     
     #user_name = gu.get_all_bookings(data, True)
-    user_name = REPLACE_ME[2]
-
-    print ("-" * 20)
-    print ("Welcome, {}".format(user_name))
-    print ("-" * 20)
-    print ("I hope you're having a good day.")
+    user_name =  REPLACE_ME[2][1:]
     
-    print ("-" * 20)
+    break_hyphens = "-" * 20
+    
+    print ("\t\t\t {}".format(break_hyphens))
+    print ("\t\t\tWelcome, {}".format(user_name))
+    print ("\t\t\t {}".format(break_hyphens))
+    print ("\t\t\tI hope you're having a good day.")
+    
+    import time
+    time.sleep(2) # allow the user to see the welcome message
+    
+    print ("\t\t\t{}".format(break_hyphens))
     print ("\nYour favorite day is: \t\t\t{}".format(fav_day(REPLACE_ME[0])))
     
     am_pm_count, mode = count_mode_day(REPLACE_ME[3])
@@ -202,7 +213,7 @@ def automate(data):
     
     # ---------------------
         # TODO
-    automate_today(data, most_occuring_slot_array)
+    #automate_today(data, most_occuring_slot_array)
     # ---------------------
     
     print ("\n\n\n")

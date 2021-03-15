@@ -19,6 +19,8 @@ from selenium.common.exceptions import TimeoutException
 import time
 import os
 import getpass 
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 
 is_fast_option = False
 
@@ -33,8 +35,8 @@ class URL:
             
             if (is_fast_option == True):
                 print ("If you're using fast option, it is recommended you try the main program first.\n")
-                self.user_name = input("Enter name: ")
-                self.code = getpass.getpass(prompt="Enter code as u would on web with push or whatever: ")
+                self.user_name = input("\n\nEnter name: ")
+                self.code = getpass.getpass(prompt="Enter code with <<xxxx+ , + push>> OR <<xxxx+ , + yyyyyy>>  : ")
                 
                 
             while (notConfirmed == True and is_fast_option == False):
@@ -73,7 +75,7 @@ class ParsedObject:
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
 
-        self.driver = webdriver.Chrome(chrome_options = options)
+        self.driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options = options)
         self.str = "push" 
         
         self.data_days_o = ""

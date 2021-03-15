@@ -133,7 +133,7 @@ def book(data, isConcurrent, times, is_fast = False, fast_time = None):
     if (isConcurrent == False):
            try: 
                booking.click()
-               print("\nSuccess! booked spot: {}".format(booking.text))
+               print("\nSuccess! booked spot: {}".format(times[int(user_booking) - 1]))
            except: print ("\n\n\nSomething weird happened, you may already have a spot on this day booked. \
                           Try concurrent booking on the main menu. [If it had 0 spots available] \n")
            return

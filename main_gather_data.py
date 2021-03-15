@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
     is_fast = False
     if (len(sys.argv) >= 2):
-        if (sys.argv[1] == "--f" or sys.argv[1] == "-fast"):
+        if (sys.argv[1] == "--f" or sys.argv[1] == "--fast"):
             is_fast = True
     
     #Debugging
@@ -48,7 +48,7 @@ if __name__ == "__main__":
     is_true = True
 
     if (is_fast == False):
-        print ("\n\n\nNote:\n\tThe Corec detected bots on their website, lol. \n\nUses:\n1. If you want to book MUCH faster without the corec website. \n2. If you want to book a spot that has none available the moment it has 1 available. \n3. If you are an engineer and think websites are dumb. \n4. Autobook any day that has least spots available. \n5. Examine your data in general. \n6. Automate this part of life away.\n\n")
+        print ("\n\n\nNote:\n\tThe Corec detected bots on their website, lol. \n\nUses:\n1. If you want to book MUCH faster without the corec website. \n2. If you want to book a spot that has none available the moment it has 1 available. \n3. If you are an engineer and think websites are dumb. \n4. Autobook any day that has least spots available. \n5. Examine your data in general. \n6. Automate this TEDIOUS part of life away.\n\n")
         
         print ("\n\t\t\t=== Corekt === ")
         print ("\t\t\tEngineers >> Jocks.\n\t\t\tIf you want to use the faster version of this software python main_gather_data.py --f \n\t\t\t\tor python main_gather_data --fast \n")
@@ -57,7 +57,7 @@ if __name__ == "__main__":
         
 
         if (is_fast == True):
-            print ("\n\n Try: book 6:00 pm Monday or if you're really lazy: b 6 P M [Please space input]\n Try: cancel or cancel all or c all or c show\n Try: automate or a or A [really fucking cool]\n Try: Quit")
+            print ("\n\n Try: book 6:00 pm Monday or if you're really lazy: b 6 P M \n\t[Please space input, Also, you can only book today/tmw/dayafter {not my rules}.]\n\n Try: cancel or cancel all or c all or c show\n Try: automate or a or A [really fucking cool]\n Try: Quit or q or Q")
             ud = input("\n\nput: ")
             
             if (ud[0] == 'b' or ud[0] == 'B'):
@@ -100,8 +100,10 @@ if __name__ == "__main__":
                 if (choice != 1): data.refetch_data_time()
                 
                 #displays the time slots.
-                times, isBooked = data.processing_data() 
-    
+                try: times, isBooked = data.processing_data() 
+                except:
+                    print ("Something went wrong, this is not a stable release <yet>")
+                    sys.exit()
                 if (isBooked):
                     print ("You've already booked on this day, cancel and try again OR the day is over there are no spots left.\n\n")
                     
