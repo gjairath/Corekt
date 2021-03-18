@@ -33,7 +33,7 @@ URL_login = "https://www.purdue.edu/apps/account/cas/login?service=https%3A%2F%2
 def site_login():
     driver.get (URL_login)
     driver.find_element_by_id("username").send_keys("gjairath")
-    driver.find_element_by_id ("password").send_keys("5357,push")
+    driver.find_element_by_id ("password").send_keys("fuck")
     
     submit_btn = driver.find_element_by_xpath(
                 "/html/body/div[1]/div[2]/form/fieldset/div[3]/div[2]/input[4]")
