@@ -33,6 +33,8 @@ URL_login = "https://www.purdue.edu/apps/account/cas/login?service=https%3A%2F%2
 def site_login():
     driver.get (URL_login)
     driver.find_element_by_id("username").send_keys("gjairath")
+    
+    # I just found out I left my password laying around but thats okay because I changed it on the website.
     driver.find_element_by_id ("password").send_keys("fuck")
     
     submit_btn = driver.find_element_by_xpath(
